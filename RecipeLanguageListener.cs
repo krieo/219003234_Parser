@@ -110,24 +110,4 @@ public interface IRecipeLanguageListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitAssignment([NotNull] RecipeLanguageParser.AssignmentContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.if_statement"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterIf_statement([NotNull] RecipeLanguageParser.If_statementContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.if_statement"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitIf_statement([NotNull] RecipeLanguageParser.If_statementContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.loop_statement"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterLoop_statement([NotNull] RecipeLanguageParser.Loop_statementContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.loop_statement"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitLoop_statement([NotNull] RecipeLanguageParser.Loop_statementContext context);
 }
