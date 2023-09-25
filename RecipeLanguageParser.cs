@@ -36,24 +36,27 @@ public partial class RecipeLanguageParser : Parser {
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
-		RECIPE=1, DO=2, METHOD=3, ID=4, LEFTPARENTHESIS=5, RIGHTPARENTHESIS=6, 
+		RECIPE=1, ID=2, DO=3, METHOD=4, LEFTPARENTHESIS=5, RIGHTPARENTHESIS=6, 
 		AS=7, INTEGER=8, INGREDIENT=9, STRING=10, SEMICOLON=11, ASK=12, ASSIGN=13, 
-		STRINGLIT=14, PLUS=15, SPEAK=16, SHARE=17, INTEGERLIT=18, DONE=19;
+		STRINGLIT=14, PLUS=15, SPEAK=16, SHARE=17, INTEGERLIT=18, DONE=19, WS=20;
 	public const int
-		RULE_recipe = 0, RULE_method = 1, RULE_ingredient = 2, RULE_statement = 3;
+		RULE_recipe = 0, RULE_statement_list = 1, RULE_statement = 2, RULE_method = 3, 
+		RULE_ingredient = 4, RULE_ask = 5, RULE_speak = 6, RULE_assignment = 7;
 	public static readonly string[] ruleNames = {
-		"recipe", "method", "ingredient", "statement"
+		"recipe", "statement_list", "statement", "method", "ingredient", "ask", 
+		"speak", "assignment"
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, "'RECIPE'", "'DO'", "'METHOD'", null, "'('", "')'", "'AS'", "'INTEGER'", 
-		"'INGREDIENT'", "'STRING'", "';'", "'ASK'", "'ASSIGN'", null, "'+'", "'SPEAK'", 
-		"'SHARE'", null, "'DONE'"
+		null, "'RECIPE'", "'ID'", "'DO'", "'METHOD'", "'LEFTPARENTHESIS'", "'RIGHTPARENTHESIS'", 
+		"'AS'", "'INTEGER'", "'INGREDIENT'", "'STRING'", "'SEMICOLON'", "'ASK'", 
+		"'ASSIGN'", "'STRINGLIT'", "'PLUS'", "'SPEAK'", "'SHARE'", "'INTEGERLIT'", 
+		"'DONE'"
 	};
 	private static readonly string[] _SymbolicNames = {
-		null, "RECIPE", "DO", "METHOD", "ID", "LEFTPARENTHESIS", "RIGHTPARENTHESIS", 
+		null, "RECIPE", "ID", "DO", "METHOD", "LEFTPARENTHESIS", "RIGHTPARENTHESIS", 
 		"AS", "INTEGER", "INGREDIENT", "STRING", "SEMICOLON", "ASK", "ASSIGN", 
-		"STRINGLIT", "PLUS", "SPEAK", "SHARE", "INTEGERLIT", "DONE"
+		"STRINGLIT", "PLUS", "SPEAK", "SHARE", "INTEGERLIT", "DONE", "WS"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -90,23 +93,11 @@ public partial class RecipeLanguageParser : Parser {
 	public partial class RecipeContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode RECIPE() { return GetToken(RecipeLanguageParser.RECIPE, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ID() { return GetToken(RecipeLanguageParser.ID, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] DO() { return GetTokens(RecipeLanguageParser.DO); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode DO(int i) {
-			return GetToken(RecipeLanguageParser.DO, i);
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode DO() { return GetToken(RecipeLanguageParser.DO, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public Statement_listContext statement_list() {
+			return GetRuleContext<Statement_listContext>(0);
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public MethodContext method() {
-			return GetRuleContext<MethodContext>(0);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] DONE() { return GetTokens(RecipeLanguageParser.DONE); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode DONE(int i) {
-			return GetToken(RecipeLanguageParser.DONE, i);
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public IngredientContext[] ingredient() {
-			return GetRuleContexts<IngredientContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public IngredientContext ingredient(int i) {
-			return GetRuleContext<IngredientContext>(i);
-		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode DONE() { return GetToken(RecipeLanguageParser.DONE, 0); }
 		public RecipeContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -128,38 +119,212 @@ public partial class RecipeLanguageParser : Parser {
 	public RecipeContext recipe() {
 		RecipeContext _localctx = new RecipeContext(Context, State);
 		EnterRule(_localctx, 0, RULE_recipe);
-		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 8;
-			Match(RECIPE);
-			State = 9;
-			Match(ID);
-			State = 10;
-			Match(DO);
-			State = 11;
-			method();
-			State = 12;
-			Match(DO);
 			State = 16;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while (_la==INGREDIENT) {
-				{
-				{
-				State = 13;
-				ingredient();
-				}
-				}
-				State = 18;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-			}
+			Match(RECIPE);
+			State = 17;
+			Match(ID);
+			State = 18;
+			Match(DO);
 			State = 19;
-			Match(DONE);
+			statement_list();
 			State = 20;
 			Match(DONE);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class Statement_listContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public StatementContext[] statement() {
+			return GetRuleContexts<StatementContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public StatementContext statement(int i) {
+			return GetRuleContext<StatementContext>(i);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode DO() { return GetToken(RecipeLanguageParser.DO, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public Statement_listContext statement_list() {
+			return GetRuleContext<Statement_listContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode DONE() { return GetToken(RecipeLanguageParser.DONE, 0); }
+		public Statement_listContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_statement_list; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IRecipeLanguageListener typedListener = listener as IRecipeLanguageListener;
+			if (typedListener != null) typedListener.EnterStatement_list(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IRecipeLanguageListener typedListener = listener as IRecipeLanguageListener;
+			if (typedListener != null) typedListener.ExitStatement_list(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public Statement_listContext statement_list() {
+		Statement_listContext _localctx = new Statement_listContext(Context, State);
+		EnterRule(_localctx, 2, RULE_statement_list);
+		int _la;
+		try {
+			State = 31;
+			ErrorHandler.Sync(this);
+			switch (TokenStream.LA(1)) {
+			case ID:
+			case METHOD:
+			case INGREDIENT:
+			case ASK:
+			case SPEAK:
+			case SHARE:
+				EnterOuterAlt(_localctx, 1);
+				{
+				State = 23;
+				ErrorHandler.Sync(this);
+				_la = TokenStream.LA(1);
+				do {
+					{
+					{
+					State = 22;
+					statement();
+					}
+					}
+					State = 25;
+					ErrorHandler.Sync(this);
+					_la = TokenStream.LA(1);
+				} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 201236L) != 0) );
+				}
+				break;
+			case DO:
+				EnterOuterAlt(_localctx, 2);
+				{
+				State = 27;
+				Match(DO);
+				State = 28;
+				statement_list();
+				State = 29;
+				Match(DONE);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class StatementContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public MethodContext method() {
+			return GetRuleContext<MethodContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public IngredientContext ingredient() {
+			return GetRuleContext<IngredientContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public AskContext ask() {
+			return GetRuleContext<AskContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public SpeakContext speak() {
+			return GetRuleContext<SpeakContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public AssignmentContext assignment() {
+			return GetRuleContext<AssignmentContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SHARE() { return GetToken(RecipeLanguageParser.SHARE, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode INTEGERLIT() { return GetToken(RecipeLanguageParser.INTEGERLIT, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SEMICOLON() { return GetToken(RecipeLanguageParser.SEMICOLON, 0); }
+		public StatementContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_statement; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IRecipeLanguageListener typedListener = listener as IRecipeLanguageListener;
+			if (typedListener != null) typedListener.EnterStatement(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IRecipeLanguageListener typedListener = listener as IRecipeLanguageListener;
+			if (typedListener != null) typedListener.ExitStatement(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public StatementContext statement() {
+		StatementContext _localctx = new StatementContext(Context, State);
+		EnterRule(_localctx, 4, RULE_statement);
+		try {
+			State = 41;
+			ErrorHandler.Sync(this);
+			switch (TokenStream.LA(1)) {
+			case METHOD:
+				EnterOuterAlt(_localctx, 1);
+				{
+				State = 33;
+				method();
+				}
+				break;
+			case INGREDIENT:
+				EnterOuterAlt(_localctx, 2);
+				{
+				State = 34;
+				ingredient();
+				}
+				break;
+			case ASK:
+				EnterOuterAlt(_localctx, 3);
+				{
+				State = 35;
+				ask();
+				}
+				break;
+			case SPEAK:
+				EnterOuterAlt(_localctx, 4);
+				{
+				State = 36;
+				speak();
+				}
+				break;
+			case ID:
+				EnterOuterAlt(_localctx, 5);
+				{
+				State = 37;
+				assignment();
+				}
+				break;
+			case SHARE:
+				EnterOuterAlt(_localctx, 6);
+				{
+				State = 38;
+				Match(SHARE);
+				State = 39;
+				Match(INTEGERLIT);
+				State = 40;
+				Match(SEMICOLON);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -181,13 +346,10 @@ public partial class RecipeLanguageParser : Parser {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode AS() { return GetToken(RecipeLanguageParser.AS, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode INTEGER() { return GetToken(RecipeLanguageParser.INTEGER, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode DO() { return GetToken(RecipeLanguageParser.DO, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public Statement_listContext statement_list() {
+			return GetRuleContext<Statement_listContext>(0);
+		}
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode DONE() { return GetToken(RecipeLanguageParser.DONE, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public StatementContext[] statement() {
-			return GetRuleContexts<StatementContext>();
-		}
-		[System.Diagnostics.DebuggerNonUserCode] public StatementContext statement(int i) {
-			return GetRuleContext<StatementContext>(i);
-		}
 		public MethodContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -208,40 +370,27 @@ public partial class RecipeLanguageParser : Parser {
 	[RuleVersion(0)]
 	public MethodContext method() {
 		MethodContext _localctx = new MethodContext(Context, State);
-		EnterRule(_localctx, 2, RULE_method);
-		int _la;
+		EnterRule(_localctx, 6, RULE_method);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 22;
+			State = 43;
 			Match(METHOD);
-			State = 23;
+			State = 44;
 			Match(ID);
-			State = 24;
+			State = 45;
 			Match(LEFTPARENTHESIS);
-			State = 25;
+			State = 46;
 			Match(RIGHTPARENTHESIS);
-			State = 26;
+			State = 47;
 			Match(AS);
-			State = 27;
+			State = 48;
 			Match(INTEGER);
-			State = 28;
+			State = 49;
 			Match(DO);
-			State = 32;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 200720L) != 0)) {
-				{
-				{
-				State = 29;
-				statement();
-				}
-				}
-				State = 34;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-			}
-			State = 35;
+			State = 50;
+			statement_list();
+			State = 51;
 			Match(DONE);
 			}
 		}
@@ -282,19 +431,19 @@ public partial class RecipeLanguageParser : Parser {
 	[RuleVersion(0)]
 	public IngredientContext ingredient() {
 		IngredientContext _localctx = new IngredientContext(Context, State);
-		EnterRule(_localctx, 4, RULE_ingredient);
+		EnterRule(_localctx, 8, RULE_ingredient);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 37;
+			State = 53;
 			Match(INGREDIENT);
-			State = 38;
+			State = 54;
 			Match(ID);
-			State = 39;
+			State = 55;
 			Match(AS);
-			State = 40;
+			State = 56;
 			Match(STRING);
-			State = 41;
+			State = 57;
 			Match(SEMICOLON);
 			}
 		}
@@ -309,7 +458,113 @@ public partial class RecipeLanguageParser : Parser {
 		return _localctx;
 	}
 
-	public partial class StatementContext : ParserRuleContext {
+	public partial class AskContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ASK() { return GetToken(RecipeLanguageParser.ASK, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LEFTPARENTHESIS() { return GetToken(RecipeLanguageParser.LEFTPARENTHESIS, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ID() { return GetToken(RecipeLanguageParser.ID, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode RIGHTPARENTHESIS() { return GetToken(RecipeLanguageParser.RIGHTPARENTHESIS, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SEMICOLON() { return GetToken(RecipeLanguageParser.SEMICOLON, 0); }
+		public AskContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_ask; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IRecipeLanguageListener typedListener = listener as IRecipeLanguageListener;
+			if (typedListener != null) typedListener.EnterAsk(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IRecipeLanguageListener typedListener = listener as IRecipeLanguageListener;
+			if (typedListener != null) typedListener.ExitAsk(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public AskContext ask() {
+		AskContext _localctx = new AskContext(Context, State);
+		EnterRule(_localctx, 10, RULE_ask);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 59;
+			Match(ASK);
+			State = 60;
+			Match(LEFTPARENTHESIS);
+			State = 61;
+			Match(ID);
+			State = 62;
+			Match(RIGHTPARENTHESIS);
+			State = 63;
+			Match(SEMICOLON);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class SpeakContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SPEAK() { return GetToken(RecipeLanguageParser.SPEAK, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LEFTPARENTHESIS() { return GetToken(RecipeLanguageParser.LEFTPARENTHESIS, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ID() { return GetToken(RecipeLanguageParser.ID, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode RIGHTPARENTHESIS() { return GetToken(RecipeLanguageParser.RIGHTPARENTHESIS, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SEMICOLON() { return GetToken(RecipeLanguageParser.SEMICOLON, 0); }
+		public SpeakContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_speak; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IRecipeLanguageListener typedListener = listener as IRecipeLanguageListener;
+			if (typedListener != null) typedListener.EnterSpeak(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IRecipeLanguageListener typedListener = listener as IRecipeLanguageListener;
+			if (typedListener != null) typedListener.ExitSpeak(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public SpeakContext speak() {
+		SpeakContext _localctx = new SpeakContext(Context, State);
+		EnterRule(_localctx, 12, RULE_speak);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 65;
+			Match(SPEAK);
+			State = 66;
+			Match(LEFTPARENTHESIS);
+			State = 67;
+			Match(ID);
+			State = 68;
+			Match(RIGHTPARENTHESIS);
+			State = 69;
+			Match(SEMICOLON);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class AssignmentContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] ID() { return GetTokens(RecipeLanguageParser.ID); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ID(int i) {
 			return GetToken(RecipeLanguageParser.ID, i);
@@ -319,106 +574,60 @@ public partial class RecipeLanguageParser : Parser {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode STRINGLIT(int i) {
 			return GetToken(RecipeLanguageParser.STRINGLIT, i);
 		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SEMICOLON() { return GetToken(RecipeLanguageParser.SEMICOLON, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] PLUS() { return GetTokens(RecipeLanguageParser.PLUS); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode PLUS(int i) {
 			return GetToken(RecipeLanguageParser.PLUS, i);
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SEMICOLON() { return GetToken(RecipeLanguageParser.SEMICOLON, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SPEAK() { return GetToken(RecipeLanguageParser.SPEAK, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LEFTPARENTHESIS() { return GetToken(RecipeLanguageParser.LEFTPARENTHESIS, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode RIGHTPARENTHESIS() { return GetToken(RecipeLanguageParser.RIGHTPARENTHESIS, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SHARE() { return GetToken(RecipeLanguageParser.SHARE, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode INTEGERLIT() { return GetToken(RecipeLanguageParser.INTEGERLIT, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ASK() { return GetToken(RecipeLanguageParser.ASK, 0); }
-		public StatementContext(ParserRuleContext parent, int invokingState)
+		public AssignmentContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
-		public override int RuleIndex { get { return RULE_statement; } }
+		public override int RuleIndex { get { return RULE_assignment; } }
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void EnterRule(IParseTreeListener listener) {
 			IRecipeLanguageListener typedListener = listener as IRecipeLanguageListener;
-			if (typedListener != null) typedListener.EnterStatement(this);
+			if (typedListener != null) typedListener.EnterAssignment(this);
 		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override void ExitRule(IParseTreeListener listener) {
 			IRecipeLanguageListener typedListener = listener as IRecipeLanguageListener;
-			if (typedListener != null) typedListener.ExitStatement(this);
+			if (typedListener != null) typedListener.ExitAssignment(this);
 		}
 	}
 
 	[RuleVersion(0)]
-	public StatementContext statement() {
-		StatementContext _localctx = new StatementContext(Context, State);
-		EnterRule(_localctx, 6, RULE_statement);
+	public AssignmentContext assignment() {
+		AssignmentContext _localctx = new AssignmentContext(Context, State);
+		EnterRule(_localctx, 14, RULE_assignment);
+		int _la;
 		try {
-			State = 64;
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 71;
+			Match(ID);
+			State = 72;
+			Match(ASSIGN);
+			State = 73;
+			Match(STRINGLIT);
+			State = 78;
 			ErrorHandler.Sync(this);
-			switch (TokenStream.LA(1)) {
-			case ID:
-				EnterOuterAlt(_localctx, 1);
+			_la = TokenStream.LA(1);
+			if (_la==PLUS) {
 				{
-				State = 43;
-				Match(ID);
-				State = 44;
-				Match(ASSIGN);
-				State = 45;
-				Match(STRINGLIT);
-				State = 46;
+				State = 74;
 				Match(PLUS);
-				State = 47;
+				State = 75;
 				Match(ID);
-				State = 48;
+				State = 76;
 				Match(PLUS);
-				State = 49;
+				State = 77;
 				Match(STRINGLIT);
-				State = 50;
-				Match(SEMICOLON);
 				}
-				break;
-			case SPEAK:
-				EnterOuterAlt(_localctx, 2);
-				{
-				State = 51;
-				Match(SPEAK);
-				State = 52;
-				Match(LEFTPARENTHESIS);
-				State = 53;
-				Match(ID);
-				State = 54;
-				Match(RIGHTPARENTHESIS);
-				State = 55;
-				Match(SEMICOLON);
-				}
-				break;
-			case SHARE:
-				EnterOuterAlt(_localctx, 3);
-				{
-				State = 56;
-				Match(SHARE);
-				State = 57;
-				Match(INTEGERLIT);
-				State = 58;
-				Match(SEMICOLON);
-				}
-				break;
-			case ASK:
-				EnterOuterAlt(_localctx, 4);
-				{
-				State = 59;
-				Match(ASK);
-				State = 60;
-				Match(LEFTPARENTHESIS);
-				State = 61;
-				Match(ID);
-				State = 62;
-				Match(RIGHTPARENTHESIS);
-				State = 63;
-				Match(SEMICOLON);
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
+			}
+
+			State = 80;
+			Match(SEMICOLON);
 			}
 		}
 		catch (RecognitionException re) {
@@ -433,25 +642,29 @@ public partial class RecipeLanguageParser : Parser {
 	}
 
 	private static int[] _serializedATN = {
-		4,1,19,67,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,1,0,1,0,1,0,1,0,1,0,1,0,5,0,
-		15,8,0,10,0,12,0,18,9,0,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,
-		1,31,8,1,10,1,12,1,34,9,1,1,1,1,1,1,2,1,2,1,2,1,2,1,2,1,2,1,3,1,3,1,3,
-		1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,
-		3,3,3,65,8,3,1,3,0,0,4,0,2,4,6,0,0,67,0,8,1,0,0,0,2,22,1,0,0,0,4,37,1,
-		0,0,0,6,64,1,0,0,0,8,9,5,1,0,0,9,10,5,4,0,0,10,11,5,2,0,0,11,12,3,2,1,
-		0,12,16,5,2,0,0,13,15,3,4,2,0,14,13,1,0,0,0,15,18,1,0,0,0,16,14,1,0,0,
-		0,16,17,1,0,0,0,17,19,1,0,0,0,18,16,1,0,0,0,19,20,5,19,0,0,20,21,5,19,
-		0,0,21,1,1,0,0,0,22,23,5,3,0,0,23,24,5,4,0,0,24,25,5,5,0,0,25,26,5,6,0,
-		0,26,27,5,7,0,0,27,28,5,8,0,0,28,32,5,2,0,0,29,31,3,6,3,0,30,29,1,0,0,
-		0,31,34,1,0,0,0,32,30,1,0,0,0,32,33,1,0,0,0,33,35,1,0,0,0,34,32,1,0,0,
-		0,35,36,5,19,0,0,36,3,1,0,0,0,37,38,5,9,0,0,38,39,5,4,0,0,39,40,5,7,0,
-		0,40,41,5,10,0,0,41,42,5,11,0,0,42,5,1,0,0,0,43,44,5,4,0,0,44,45,5,13,
-		0,0,45,46,5,14,0,0,46,47,5,15,0,0,47,48,5,4,0,0,48,49,5,15,0,0,49,50,5,
-		14,0,0,50,65,5,11,0,0,51,52,5,16,0,0,52,53,5,5,0,0,53,54,5,4,0,0,54,55,
-		5,6,0,0,55,65,5,11,0,0,56,57,5,17,0,0,57,58,5,18,0,0,58,65,5,11,0,0,59,
-		60,5,12,0,0,60,61,5,5,0,0,61,62,5,4,0,0,62,63,5,6,0,0,63,65,5,11,0,0,64,
-		43,1,0,0,0,64,51,1,0,0,0,64,56,1,0,0,0,64,59,1,0,0,0,65,7,1,0,0,0,3,16,
-		32,64
+		4,1,20,83,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
+		7,7,1,0,1,0,1,0,1,0,1,0,1,0,1,1,4,1,24,8,1,11,1,12,1,25,1,1,1,1,1,1,1,
+		1,3,1,32,8,1,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,3,2,42,8,2,1,3,1,3,1,3,1,
+		3,1,3,1,3,1,3,1,3,1,3,1,3,1,4,1,4,1,4,1,4,1,4,1,4,1,5,1,5,1,5,1,5,1,5,
+		1,5,1,6,1,6,1,6,1,6,1,6,1,6,1,7,1,7,1,7,1,7,1,7,1,7,1,7,3,7,79,8,7,1,7,
+		1,7,1,7,0,0,8,0,2,4,6,8,10,12,14,0,0,82,0,16,1,0,0,0,2,31,1,0,0,0,4,41,
+		1,0,0,0,6,43,1,0,0,0,8,53,1,0,0,0,10,59,1,0,0,0,12,65,1,0,0,0,14,71,1,
+		0,0,0,16,17,5,1,0,0,17,18,5,2,0,0,18,19,5,3,0,0,19,20,3,2,1,0,20,21,5,
+		19,0,0,21,1,1,0,0,0,22,24,3,4,2,0,23,22,1,0,0,0,24,25,1,0,0,0,25,23,1,
+		0,0,0,25,26,1,0,0,0,26,32,1,0,0,0,27,28,5,3,0,0,28,29,3,2,1,0,29,30,5,
+		19,0,0,30,32,1,0,0,0,31,23,1,0,0,0,31,27,1,0,0,0,32,3,1,0,0,0,33,42,3,
+		6,3,0,34,42,3,8,4,0,35,42,3,10,5,0,36,42,3,12,6,0,37,42,3,14,7,0,38,39,
+		5,17,0,0,39,40,5,18,0,0,40,42,5,11,0,0,41,33,1,0,0,0,41,34,1,0,0,0,41,
+		35,1,0,0,0,41,36,1,0,0,0,41,37,1,0,0,0,41,38,1,0,0,0,42,5,1,0,0,0,43,44,
+		5,4,0,0,44,45,5,2,0,0,45,46,5,5,0,0,46,47,5,6,0,0,47,48,5,7,0,0,48,49,
+		5,8,0,0,49,50,5,3,0,0,50,51,3,2,1,0,51,52,5,19,0,0,52,7,1,0,0,0,53,54,
+		5,9,0,0,54,55,5,2,0,0,55,56,5,7,0,0,56,57,5,10,0,0,57,58,5,11,0,0,58,9,
+		1,0,0,0,59,60,5,12,0,0,60,61,5,5,0,0,61,62,5,2,0,0,62,63,5,6,0,0,63,64,
+		5,11,0,0,64,11,1,0,0,0,65,66,5,16,0,0,66,67,5,5,0,0,67,68,5,2,0,0,68,69,
+		5,6,0,0,69,70,5,11,0,0,70,13,1,0,0,0,71,72,5,2,0,0,72,73,5,13,0,0,73,78,
+		5,14,0,0,74,75,5,15,0,0,75,76,5,2,0,0,76,77,5,15,0,0,77,79,5,14,0,0,78,
+		74,1,0,0,0,78,79,1,0,0,0,79,80,1,0,0,0,80,81,5,11,0,0,81,15,1,0,0,0,4,
+		25,31,41,78
 	};
 
 	public static readonly ATN _ATN =

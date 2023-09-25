@@ -32,10 +32,11 @@ namespace _219003234_Parser
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
             string dataFolderPath = Path.Combine(projectDirectory, "sample programs");
             string filename = "sample8.txt";
-            bool continuee = true;
+           // bool continuee = true;
+         
             // ParsingTable parsingTable1 = new ParsingTable();
-            while (continuee == true)
-            {
+           // while (continuee == true)
+           // {
                 Console.WriteLine("Enter number to load file from 1 to 8 (any other input will result in file 8 being loaded):");
                 string fileNumber = Console.ReadLine();
 
@@ -82,34 +83,55 @@ namespace _219003234_Parser
                 // Create an instance of the Scanner class and tokenize the input
                 Scanner scanner = new Scanner();
                 List<Token> tokens = scanner.Tokenize(input);
-                var inputTokens = new List<string>();
+                tokens = scanner.Tokenize(input);
+                List<string> inputTokens = new List<string>();
+
+            string scannerTokens = new string(""); 
                 // Print out the type and lexeme pairs from the tokenized input
                 foreach (Token token in tokens)
                 {
                     //Console.WriteLine($"Type: {token.Type}, Lexeme: {token.Lexeme}");
                     // Console.WriteLine(token.Lexeme +" = " + token.Type);
-                    //Console.WriteLine(token.Lexeme + " = " + token.Type + " ");
-                    Console.WriteLine(token.Type + " ");
+                    Console.WriteLine(token.Lexeme + " = " + token.Type + " ");
+                 //   Console.WriteLine(token.Type + " ");
                     inputTokens.Add(token.Type);
+                    scannerTokens += token.Type + " ";
                     //Console.WriteLine(token.Type);
                 }
 
-            }
+            //    }
 
 
 
             //scanner end
-/*            Console.WriteLine("Enter an expression: ");
-            string input = Console.ReadLine();
+            //          Console.WriteLine("Enter an expression: ");
+            //         string input = Console.ReadLine();
 
-            ICharStream stream = new AntlrInputStream(input);
-            RecipeLanguageLexer lexer = new RecipeLanguageLexer(stream); // Replace with your lexer class nam
-            CommonTokenStream tokens = new CommonTokenStream(lexer);
-            RecipeLanguageParser parser = new RecipeLanguageParser(tokens); // Replace with your parser class name
+            // Create an instance of the ANTLR character stream
+           // scannerTokens = "INGREDIENT ID AS STRING SEMICOLON";
+            ICharStream stream = new AntlrInputStream(scannerTokens);
+            Console.WriteLine("ANTLR Character Stream:\n" + stream.ToString() + "\n");
 
-            IParseTree tree = parser.recipe(); // Replace 'start' with your entry rule name
-            Console.WriteLine("Parse tree: " + tree.ToStringTree(parser));
-  */
+            // Create the lexer
+            RecipeLanguageLexer lexer = new RecipeLanguageLexer(stream);
+            Console.WriteLine("Lexer Output:\n");
+
+            // Tokenize the input
+            CommonTokenStream tokens2 = new CommonTokenStream(lexer);
+            tokens2.Fill();
+            foreach (var token in tokens2.GetTokens())
+            {
+                Console.WriteLine($"Token: {token.Type} '{token.Text}' at {token.StartIndex}:{token.StopIndex}");
+           
             }
+
+            // Create the parser
+            RecipeLanguageParser parser = new RecipeLanguageParser(tokens2);
+
+            // Parse the input
+            IParseTree tree = parser.recipe();
+            Console.WriteLine("\nParse Tree:");
+            Console.WriteLine(tree.ToStringTree(parser));
+        }
     }
 }

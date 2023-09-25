@@ -48,6 +48,30 @@ public partial class RecipeLanguageBaseListener : IRecipeLanguageListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitRecipe([NotNull] RecipeLanguageParser.RecipeContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.statement_list"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterStatement_list([NotNull] RecipeLanguageParser.Statement_listContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.statement_list"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitStatement_list([NotNull] RecipeLanguageParser.Statement_listContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.statement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterStatement([NotNull] RecipeLanguageParser.StatementContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.statement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitStatement([NotNull] RecipeLanguageParser.StatementContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.method"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -72,17 +96,41 @@ public partial class RecipeLanguageBaseListener : IRecipeLanguageListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitIngredient([NotNull] RecipeLanguageParser.IngredientContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.statement"/>.
+	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.ask"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterStatement([NotNull] RecipeLanguageParser.StatementContext context) { }
+	public virtual void EnterAsk([NotNull] RecipeLanguageParser.AskContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.statement"/>.
+	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.ask"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitStatement([NotNull] RecipeLanguageParser.StatementContext context) { }
+	public virtual void ExitAsk([NotNull] RecipeLanguageParser.AskContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.speak"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterSpeak([NotNull] RecipeLanguageParser.SpeakContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.speak"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitSpeak([NotNull] RecipeLanguageParser.SpeakContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.assignment"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterAssignment([NotNull] RecipeLanguageParser.AssignmentContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.assignment"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitAssignment([NotNull] RecipeLanguageParser.AssignmentContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>
