@@ -36,27 +36,31 @@ public partial class RecipeLanguageParser : Parser {
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
-		RECIPE=1, ID=2, DO=3, METHOD=4, LEFTPARENTHESIS=5, RIGHTPARENTHESIS=6, 
-		AS=7, INTEGER=8, INGREDIENT=9, STRING=10, SEMICOLON=11, ASK=12, ASSIGN=13, 
-		STRINGLIT=14, PLUS=15, SPEAK=16, SHARE=17, INTEGERLIT=18, DONE=19, WS=20;
+		AS=1, ASSIGN=2, ASK=3, DO=4, DONE=5, ELSE=6, EQUAL=7, ID=8, IF=9, INGREDIENT=10, 
+		INTEGER=11, INTEGERLIT=12, LEFTPARENTHESIS=13, LESSEREQUAL=14, LOOP=15, 
+		METHOD=16, PLUS=17, RECIPE=18, RIGHTPARENTHESIS=19, SEMICOLON=20, SHARE=21, 
+		SPEAK=22, STRING=23, STRINGLIT=24, THEN=25, WHILE=26, WS=27;
 	public const int
 		RULE_recipe = 0, RULE_statement_list = 1, RULE_statement = 2, RULE_method = 3, 
-		RULE_ingredient = 4, RULE_ask = 5, RULE_speak = 6, RULE_assignment = 7;
+		RULE_ingredient = 4, RULE_ask = 5, RULE_speak = 6, RULE_assignment = 7, 
+		RULE_if_statement = 8, RULE_loop_statement = 9;
 	public static readonly string[] ruleNames = {
 		"recipe", "statement_list", "statement", "method", "ingredient", "ask", 
-		"speak", "assignment"
+		"speak", "assignment", "if_statement", "loop_statement"
 	};
 
 	private static readonly string[] _LiteralNames = {
-		null, "'RECIPE'", "'ID'", "'DO'", "'METHOD'", "'LEFTPARENTHESIS'", "'RIGHTPARENTHESIS'", 
-		"'AS'", "'INTEGER'", "'INGREDIENT'", "'STRING'", "'SEMICOLON'", "'ASK'", 
-		"'ASSIGN'", "'STRINGLIT'", "'PLUS'", "'SPEAK'", "'SHARE'", "'INTEGERLIT'", 
-		"'DONE'"
+		null, "'AS'", "'ASSIGN'", "'ASK'", "'DO'", "'DONE'", "'ELSE'", "'EQUAL'", 
+		"'ID'", "'IF'", "'INGREDIENT'", "'INTEGER'", "'INTEGERLIT'", "'LEFTPARENTHESIS'", 
+		"'LESSEREQUAL'", "'LOOP'", "'METHOD'", "'PLUS'", "'RECIPE'", "'RIGHTPARENTHESIS'", 
+		"'SEMICOLON'", "'SHARE'", "'SPEAK'", "'STRING'", "'STRINGLIT'", "'THEN'", 
+		"'WHILE'"
 	};
 	private static readonly string[] _SymbolicNames = {
-		null, "RECIPE", "ID", "DO", "METHOD", "LEFTPARENTHESIS", "RIGHTPARENTHESIS", 
-		"AS", "INTEGER", "INGREDIENT", "STRING", "SEMICOLON", "ASK", "ASSIGN", 
-		"STRINGLIT", "PLUS", "SPEAK", "SHARE", "INTEGERLIT", "DONE", "WS"
+		null, "AS", "ASSIGN", "ASK", "DO", "DONE", "ELSE", "EQUAL", "ID", "IF", 
+		"INGREDIENT", "INTEGER", "INTEGERLIT", "LEFTPARENTHESIS", "LESSEREQUAL", 
+		"LOOP", "METHOD", "PLUS", "RECIPE", "RIGHTPARENTHESIS", "SEMICOLON", "SHARE", 
+		"SPEAK", "STRING", "STRINGLIT", "THEN", "WHILE", "WS"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -122,15 +126,15 @@ public partial class RecipeLanguageParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 16;
-			Match(RECIPE);
-			State = 17;
-			Match(ID);
-			State = 18;
-			Match(DO);
-			State = 19;
-			statement_list();
 			State = 20;
+			Match(RECIPE);
+			State = 21;
+			Match(ID);
+			State = 22;
+			Match(DO);
+			State = 23;
+			statement_list();
+			State = 24;
 			Match(DONE);
 			}
 		}
@@ -178,43 +182,51 @@ public partial class RecipeLanguageParser : Parser {
 	public Statement_listContext statement_list() {
 		Statement_listContext _localctx = new Statement_listContext(Context, State);
 		EnterRule(_localctx, 2, RULE_statement_list);
-		int _la;
 		try {
-			State = 31;
+			int _alt;
+			State = 35;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
-			case ID:
-			case METHOD:
-			case INGREDIENT:
 			case ASK:
-			case SPEAK:
+			case ID:
+			case IF:
+			case INGREDIENT:
+			case LOOP:
+			case METHOD:
 			case SHARE:
+			case SPEAK:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 23;
+				State = 27;
 				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
+				_alt = 1;
 				do {
-					{
-					{
-					State = 22;
-					statement();
+					switch (_alt) {
+					case 1:
+						{
+						{
+						State = 26;
+						statement();
+						}
+						}
+						break;
+					default:
+						throw new NoViableAltException(this);
 					}
-					}
-					State = 25;
+					State = 29;
 					ErrorHandler.Sync(this);
-					_la = TokenStream.LA(1);
-				} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 201236L) != 0) );
+					_alt = Interpreter.AdaptivePredict(TokenStream,0,Context);
+				} while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER );
 				}
 				break;
 			case DO:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 27;
+				State = 31;
 				Match(DO);
-				State = 28;
+				State = 32;
 				statement_list();
-				State = 29;
+				State = 33;
 				Match(DONE);
 				}
 				break;
@@ -252,6 +264,12 @@ public partial class RecipeLanguageParser : Parser {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SHARE() { return GetToken(RecipeLanguageParser.SHARE, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode INTEGERLIT() { return GetToken(RecipeLanguageParser.INTEGERLIT, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SEMICOLON() { return GetToken(RecipeLanguageParser.SEMICOLON, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public If_statementContext if_statement() {
+			return GetRuleContext<If_statementContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public Loop_statementContext loop_statement() {
+			return GetRuleContext<Loop_statementContext>(0);
+		}
 		public StatementContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -274,53 +292,67 @@ public partial class RecipeLanguageParser : Parser {
 		StatementContext _localctx = new StatementContext(Context, State);
 		EnterRule(_localctx, 4, RULE_statement);
 		try {
-			State = 41;
+			State = 47;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case METHOD:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 33;
+				State = 37;
 				method();
 				}
 				break;
 			case INGREDIENT:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 34;
+				State = 38;
 				ingredient();
 				}
 				break;
 			case ASK:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 35;
+				State = 39;
 				ask();
 				}
 				break;
 			case SPEAK:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 36;
+				State = 40;
 				speak();
 				}
 				break;
 			case ID:
 				EnterOuterAlt(_localctx, 5);
 				{
-				State = 37;
+				State = 41;
 				assignment();
 				}
 				break;
 			case SHARE:
 				EnterOuterAlt(_localctx, 6);
 				{
-				State = 38;
+				State = 42;
 				Match(SHARE);
-				State = 39;
+				State = 43;
 				Match(INTEGERLIT);
-				State = 40;
+				State = 44;
 				Match(SEMICOLON);
+				}
+				break;
+			case IF:
+				EnterOuterAlt(_localctx, 7);
+				{
+				State = 45;
+				if_statement();
+				}
+				break;
+			case LOOP:
+				EnterOuterAlt(_localctx, 8);
+				{
+				State = 46;
+				loop_statement();
 				}
 				break;
 			default:
@@ -374,23 +406,23 @@ public partial class RecipeLanguageParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 43;
-			Match(METHOD);
-			State = 44;
-			Match(ID);
-			State = 45;
-			Match(LEFTPARENTHESIS);
-			State = 46;
-			Match(RIGHTPARENTHESIS);
-			State = 47;
-			Match(AS);
-			State = 48;
-			Match(INTEGER);
 			State = 49;
-			Match(DO);
+			Match(METHOD);
 			State = 50;
-			statement_list();
+			Match(ID);
 			State = 51;
+			Match(LEFTPARENTHESIS);
+			State = 52;
+			Match(RIGHTPARENTHESIS);
+			State = 53;
+			Match(AS);
+			State = 54;
+			Match(INTEGER);
+			State = 55;
+			Match(DO);
+			State = 56;
+			statement_list();
+			State = 57;
 			Match(DONE);
 			}
 		}
@@ -409,7 +441,7 @@ public partial class RecipeLanguageParser : Parser {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode INGREDIENT() { return GetToken(RecipeLanguageParser.INGREDIENT, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ID() { return GetToken(RecipeLanguageParser.ID, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode AS() { return GetToken(RecipeLanguageParser.AS, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode STRING() { return GetToken(RecipeLanguageParser.STRING, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode INTEGER() { return GetToken(RecipeLanguageParser.INTEGER, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SEMICOLON() { return GetToken(RecipeLanguageParser.SEMICOLON, 0); }
 		public IngredientContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
@@ -435,15 +467,15 @@ public partial class RecipeLanguageParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 53;
+			State = 59;
 			Match(INGREDIENT);
-			State = 54;
+			State = 60;
 			Match(ID);
-			State = 55;
+			State = 61;
 			Match(AS);
-			State = 56;
-			Match(STRING);
-			State = 57;
+			State = 62;
+			Match(INTEGER);
+			State = 63;
 			Match(SEMICOLON);
 			}
 		}
@@ -488,15 +520,15 @@ public partial class RecipeLanguageParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 59;
+			State = 65;
 			Match(ASK);
-			State = 60;
+			State = 66;
 			Match(LEFTPARENTHESIS);
-			State = 61;
+			State = 67;
 			Match(ID);
-			State = 62;
+			State = 68;
 			Match(RIGHTPARENTHESIS);
-			State = 63;
+			State = 69;
 			Match(SEMICOLON);
 			}
 		}
@@ -514,9 +546,10 @@ public partial class RecipeLanguageParser : Parser {
 	public partial class SpeakContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SPEAK() { return GetToken(RecipeLanguageParser.SPEAK, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LEFTPARENTHESIS() { return GetToken(RecipeLanguageParser.LEFTPARENTHESIS, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ID() { return GetToken(RecipeLanguageParser.ID, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode STRINGLIT() { return GetToken(RecipeLanguageParser.STRINGLIT, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode RIGHTPARENTHESIS() { return GetToken(RecipeLanguageParser.RIGHTPARENTHESIS, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SEMICOLON() { return GetToken(RecipeLanguageParser.SEMICOLON, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ID() { return GetToken(RecipeLanguageParser.ID, 0); }
 		public SpeakContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -539,18 +572,39 @@ public partial class RecipeLanguageParser : Parser {
 		SpeakContext _localctx = new SpeakContext(Context, State);
 		EnterRule(_localctx, 12, RULE_speak);
 		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 65;
-			Match(SPEAK);
-			State = 66;
-			Match(LEFTPARENTHESIS);
-			State = 67;
-			Match(ID);
-			State = 68;
-			Match(RIGHTPARENTHESIS);
-			State = 69;
-			Match(SEMICOLON);
+			State = 81;
+			ErrorHandler.Sync(this);
+			switch ( Interpreter.AdaptivePredict(TokenStream,3,Context) ) {
+			case 1:
+				EnterOuterAlt(_localctx, 1);
+				{
+				State = 71;
+				Match(SPEAK);
+				State = 72;
+				Match(LEFTPARENTHESIS);
+				State = 73;
+				Match(STRINGLIT);
+				State = 74;
+				Match(RIGHTPARENTHESIS);
+				State = 75;
+				Match(SEMICOLON);
+				}
+				break;
+			case 2:
+				EnterOuterAlt(_localctx, 2);
+				{
+				State = 76;
+				Match(SPEAK);
+				State = 77;
+				Match(LEFTPARENTHESIS);
+				State = 78;
+				Match(ID);
+				State = 79;
+				Match(RIGHTPARENTHESIS);
+				State = 80;
+				Match(SEMICOLON);
+				}
+				break;
 			}
 		}
 		catch (RecognitionException re) {
@@ -570,15 +624,9 @@ public partial class RecipeLanguageParser : Parser {
 			return GetToken(RecipeLanguageParser.ID, i);
 		}
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ASSIGN() { return GetToken(RecipeLanguageParser.ASSIGN, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] STRINGLIT() { return GetTokens(RecipeLanguageParser.STRINGLIT); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode STRINGLIT(int i) {
-			return GetToken(RecipeLanguageParser.STRINGLIT, i);
-		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode INTEGERLIT() { return GetToken(RecipeLanguageParser.INTEGERLIT, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode SEMICOLON() { return GetToken(RecipeLanguageParser.SEMICOLON, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode[] PLUS() { return GetTokens(RecipeLanguageParser.PLUS); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode PLUS(int i) {
-			return GetToken(RecipeLanguageParser.PLUS, i);
-		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode PLUS() { return GetToken(RecipeLanguageParser.PLUS, 0); }
 		public AssignmentContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -600,34 +648,195 @@ public partial class RecipeLanguageParser : Parser {
 	public AssignmentContext assignment() {
 		AssignmentContext _localctx = new AssignmentContext(Context, State);
 		EnterRule(_localctx, 14, RULE_assignment);
-		int _la;
+		try {
+			State = 93;
+			ErrorHandler.Sync(this);
+			switch ( Interpreter.AdaptivePredict(TokenStream,4,Context) ) {
+			case 1:
+				EnterOuterAlt(_localctx, 1);
+				{
+				State = 83;
+				Match(ID);
+				State = 84;
+				Match(ASSIGN);
+				State = 85;
+				Match(INTEGERLIT);
+				State = 86;
+				Match(SEMICOLON);
+				}
+				break;
+			case 2:
+				EnterOuterAlt(_localctx, 2);
+				{
+				State = 87;
+				Match(ID);
+				State = 88;
+				Match(ASSIGN);
+				State = 89;
+				Match(ID);
+				State = 90;
+				Match(PLUS);
+				State = 91;
+				Match(INTEGERLIT);
+				State = 92;
+				Match(SEMICOLON);
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class If_statementContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode IF() { return GetToken(RecipeLanguageParser.IF, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ID() { return GetToken(RecipeLanguageParser.ID, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode EQUAL() { return GetToken(RecipeLanguageParser.EQUAL, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode INTEGERLIT() { return GetToken(RecipeLanguageParser.INTEGERLIT, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode THEN() { return GetToken(RecipeLanguageParser.THEN, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public Statement_listContext[] statement_list() {
+			return GetRuleContexts<Statement_listContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public Statement_listContext statement_list(int i) {
+			return GetRuleContext<Statement_listContext>(i);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ELSE() { return GetToken(RecipeLanguageParser.ELSE, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public If_statementContext if_statement() {
+			return GetRuleContext<If_statementContext>(0);
+		}
+		public If_statementContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_if_statement; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IRecipeLanguageListener typedListener = listener as IRecipeLanguageListener;
+			if (typedListener != null) typedListener.EnterIf_statement(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IRecipeLanguageListener typedListener = listener as IRecipeLanguageListener;
+			if (typedListener != null) typedListener.ExitIf_statement(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public If_statementContext if_statement() {
+		If_statementContext _localctx = new If_statementContext(Context, State);
+		EnterRule(_localctx, 16, RULE_if_statement);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 71;
+			State = 95;
+			Match(IF);
+			State = 96;
 			Match(ID);
-			State = 72;
-			Match(ASSIGN);
-			State = 73;
-			Match(STRINGLIT);
-			State = 78;
+			State = 97;
+			Match(EQUAL);
+			State = 98;
+			Match(INTEGERLIT);
+			State = 99;
+			Match(THEN);
+			State = 100;
+			statement_list();
+			State = 106;
 			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			if (_la==PLUS) {
+			switch ( Interpreter.AdaptivePredict(TokenStream,6,Context) ) {
+			case 1:
 				{
-				State = 74;
-				Match(PLUS);
-				State = 75;
-				Match(ID);
-				State = 76;
-				Match(PLUS);
-				State = 77;
-				Match(STRINGLIT);
+				State = 101;
+				Match(ELSE);
+				State = 104;
+				ErrorHandler.Sync(this);
+				switch ( Interpreter.AdaptivePredict(TokenStream,5,Context) ) {
+				case 1:
+					{
+					State = 102;
+					if_statement();
+					}
+					break;
+				case 2:
+					{
+					State = 103;
+					statement_list();
+					}
+					break;
 				}
+				}
+				break;
 			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
 
-			State = 80;
-			Match(SEMICOLON);
+	public partial class Loop_statementContext : ParserRuleContext {
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LOOP() { return GetToken(RecipeLanguageParser.LOOP, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode WHILE() { return GetToken(RecipeLanguageParser.WHILE, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ID() { return GetToken(RecipeLanguageParser.ID, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LESSEREQUAL() { return GetToken(RecipeLanguageParser.LESSEREQUAL, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode INTEGERLIT() { return GetToken(RecipeLanguageParser.INTEGERLIT, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode DO() { return GetToken(RecipeLanguageParser.DO, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public Statement_listContext statement_list() {
+			return GetRuleContext<Statement_listContext>(0);
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode DONE() { return GetToken(RecipeLanguageParser.DONE, 0); }
+		public Loop_statementContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_loop_statement; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			IRecipeLanguageListener typedListener = listener as IRecipeLanguageListener;
+			if (typedListener != null) typedListener.EnterLoop_statement(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			IRecipeLanguageListener typedListener = listener as IRecipeLanguageListener;
+			if (typedListener != null) typedListener.ExitLoop_statement(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public Loop_statementContext loop_statement() {
+		Loop_statementContext _localctx = new Loop_statementContext(Context, State);
+		EnterRule(_localctx, 18, RULE_loop_statement);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 108;
+			Match(LOOP);
+			State = 109;
+			Match(WHILE);
+			State = 110;
+			Match(ID);
+			State = 111;
+			Match(LESSEREQUAL);
+			State = 112;
+			Match(INTEGERLIT);
+			State = 113;
+			Match(DO);
+			State = 114;
+			statement_list();
+			State = 115;
+			Match(DONE);
 			}
 		}
 		catch (RecognitionException re) {
@@ -642,29 +851,39 @@ public partial class RecipeLanguageParser : Parser {
 	}
 
 	private static int[] _serializedATN = {
-		4,1,20,83,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
-		7,7,1,0,1,0,1,0,1,0,1,0,1,0,1,1,4,1,24,8,1,11,1,12,1,25,1,1,1,1,1,1,1,
-		1,3,1,32,8,1,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,3,2,42,8,2,1,3,1,3,1,3,1,
-		3,1,3,1,3,1,3,1,3,1,3,1,3,1,4,1,4,1,4,1,4,1,4,1,4,1,5,1,5,1,5,1,5,1,5,
-		1,5,1,6,1,6,1,6,1,6,1,6,1,6,1,7,1,7,1,7,1,7,1,7,1,7,1,7,3,7,79,8,7,1,7,
-		1,7,1,7,0,0,8,0,2,4,6,8,10,12,14,0,0,82,0,16,1,0,0,0,2,31,1,0,0,0,4,41,
-		1,0,0,0,6,43,1,0,0,0,8,53,1,0,0,0,10,59,1,0,0,0,12,65,1,0,0,0,14,71,1,
-		0,0,0,16,17,5,1,0,0,17,18,5,2,0,0,18,19,5,3,0,0,19,20,3,2,1,0,20,21,5,
-		19,0,0,21,1,1,0,0,0,22,24,3,4,2,0,23,22,1,0,0,0,24,25,1,0,0,0,25,23,1,
-		0,0,0,25,26,1,0,0,0,26,32,1,0,0,0,27,28,5,3,0,0,28,29,3,2,1,0,29,30,5,
-		19,0,0,30,32,1,0,0,0,31,23,1,0,0,0,31,27,1,0,0,0,32,3,1,0,0,0,33,42,3,
-		6,3,0,34,42,3,8,4,0,35,42,3,10,5,0,36,42,3,12,6,0,37,42,3,14,7,0,38,39,
-		5,17,0,0,39,40,5,18,0,0,40,42,5,11,0,0,41,33,1,0,0,0,41,34,1,0,0,0,41,
-		35,1,0,0,0,41,36,1,0,0,0,41,37,1,0,0,0,41,38,1,0,0,0,42,5,1,0,0,0,43,44,
-		5,4,0,0,44,45,5,2,0,0,45,46,5,5,0,0,46,47,5,6,0,0,47,48,5,7,0,0,48,49,
-		5,8,0,0,49,50,5,3,0,0,50,51,3,2,1,0,51,52,5,19,0,0,52,7,1,0,0,0,53,54,
-		5,9,0,0,54,55,5,2,0,0,55,56,5,7,0,0,56,57,5,10,0,0,57,58,5,11,0,0,58,9,
-		1,0,0,0,59,60,5,12,0,0,60,61,5,5,0,0,61,62,5,2,0,0,62,63,5,6,0,0,63,64,
-		5,11,0,0,64,11,1,0,0,0,65,66,5,16,0,0,66,67,5,5,0,0,67,68,5,2,0,0,68,69,
-		5,6,0,0,69,70,5,11,0,0,70,13,1,0,0,0,71,72,5,2,0,0,72,73,5,13,0,0,73,78,
-		5,14,0,0,74,75,5,15,0,0,75,76,5,2,0,0,76,77,5,15,0,0,77,79,5,14,0,0,78,
-		74,1,0,0,0,78,79,1,0,0,0,79,80,1,0,0,0,80,81,5,11,0,0,81,15,1,0,0,0,4,
-		25,31,41,78
+		4,1,27,118,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
+		7,7,2,8,7,8,2,9,7,9,1,0,1,0,1,0,1,0,1,0,1,0,1,1,4,1,28,8,1,11,1,12,1,29,
+		1,1,1,1,1,1,1,1,3,1,36,8,1,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,3,2,
+		48,8,2,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,4,1,4,1,4,1,4,1,4,1,4,
+		1,5,1,5,1,5,1,5,1,5,1,5,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,3,6,82,
+		8,6,1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,3,7,94,8,7,1,8,1,8,1,8,1,8,
+		1,8,1,8,1,8,1,8,1,8,3,8,105,8,8,3,8,107,8,8,1,9,1,9,1,9,1,9,1,9,1,9,1,
+		9,1,9,1,9,1,9,0,0,10,0,2,4,6,8,10,12,14,16,18,0,0,120,0,20,1,0,0,0,2,35,
+		1,0,0,0,4,47,1,0,0,0,6,49,1,0,0,0,8,59,1,0,0,0,10,65,1,0,0,0,12,81,1,0,
+		0,0,14,93,1,0,0,0,16,95,1,0,0,0,18,108,1,0,0,0,20,21,5,18,0,0,21,22,5,
+		8,0,0,22,23,5,4,0,0,23,24,3,2,1,0,24,25,5,5,0,0,25,1,1,0,0,0,26,28,3,4,
+		2,0,27,26,1,0,0,0,28,29,1,0,0,0,29,27,1,0,0,0,29,30,1,0,0,0,30,36,1,0,
+		0,0,31,32,5,4,0,0,32,33,3,2,1,0,33,34,5,5,0,0,34,36,1,0,0,0,35,27,1,0,
+		0,0,35,31,1,0,0,0,36,3,1,0,0,0,37,48,3,6,3,0,38,48,3,8,4,0,39,48,3,10,
+		5,0,40,48,3,12,6,0,41,48,3,14,7,0,42,43,5,21,0,0,43,44,5,12,0,0,44,48,
+		5,20,0,0,45,48,3,16,8,0,46,48,3,18,9,0,47,37,1,0,0,0,47,38,1,0,0,0,47,
+		39,1,0,0,0,47,40,1,0,0,0,47,41,1,0,0,0,47,42,1,0,0,0,47,45,1,0,0,0,47,
+		46,1,0,0,0,48,5,1,0,0,0,49,50,5,16,0,0,50,51,5,8,0,0,51,52,5,13,0,0,52,
+		53,5,19,0,0,53,54,5,1,0,0,54,55,5,11,0,0,55,56,5,4,0,0,56,57,3,2,1,0,57,
+		58,5,5,0,0,58,7,1,0,0,0,59,60,5,10,0,0,60,61,5,8,0,0,61,62,5,1,0,0,62,
+		63,5,11,0,0,63,64,5,20,0,0,64,9,1,0,0,0,65,66,5,3,0,0,66,67,5,13,0,0,67,
+		68,5,8,0,0,68,69,5,19,0,0,69,70,5,20,0,0,70,11,1,0,0,0,71,72,5,22,0,0,
+		72,73,5,13,0,0,73,74,5,24,0,0,74,75,5,19,0,0,75,82,5,20,0,0,76,77,5,22,
+		0,0,77,78,5,13,0,0,78,79,5,8,0,0,79,80,5,19,0,0,80,82,5,20,0,0,81,71,1,
+		0,0,0,81,76,1,0,0,0,82,13,1,0,0,0,83,84,5,8,0,0,84,85,5,2,0,0,85,86,5,
+		12,0,0,86,94,5,20,0,0,87,88,5,8,0,0,88,89,5,2,0,0,89,90,5,8,0,0,90,91,
+		5,17,0,0,91,92,5,12,0,0,92,94,5,20,0,0,93,83,1,0,0,0,93,87,1,0,0,0,94,
+		15,1,0,0,0,95,96,5,9,0,0,96,97,5,8,0,0,97,98,5,7,0,0,98,99,5,12,0,0,99,
+		100,5,25,0,0,100,106,3,2,1,0,101,104,5,6,0,0,102,105,3,16,8,0,103,105,
+		3,2,1,0,104,102,1,0,0,0,104,103,1,0,0,0,105,107,1,0,0,0,106,101,1,0,0,
+		0,106,107,1,0,0,0,107,17,1,0,0,0,108,109,5,15,0,0,109,110,5,26,0,0,110,
+		111,5,8,0,0,111,112,5,14,0,0,112,113,5,12,0,0,113,114,5,4,0,0,114,115,
+		3,2,1,0,115,116,5,5,0,0,116,19,1,0,0,0,7,29,35,47,81,93,104,106
 	};
 
 	public static readonly ATN _ATN =

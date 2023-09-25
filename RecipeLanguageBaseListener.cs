@@ -131,6 +131,30 @@ public partial class RecipeLanguageBaseListener : IRecipeLanguageListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitAssignment([NotNull] RecipeLanguageParser.AssignmentContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.if_statement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterIf_statement([NotNull] RecipeLanguageParser.If_statementContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.if_statement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitIf_statement([NotNull] RecipeLanguageParser.If_statementContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.loop_statement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterLoop_statement([NotNull] RecipeLanguageParser.Loop_statementContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.loop_statement"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitLoop_statement([NotNull] RecipeLanguageParser.Loop_statementContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>
