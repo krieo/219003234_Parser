@@ -139,15 +139,22 @@ namespace _219003234_Parser
 
 
             // Create your custom listener
-            var myListener = new MyCustomListener();
+          //  var myListener = new MyCustomListener();
 
             // Walk the parse tree using your custom listener
-            ParseTreeWalker.Default.Walk(myListener, tree);
+           // ParseTreeWalker.Default.Walk(myListener, tree);
 
             //parser end
 
             //tree walker start
+            // Create an instance of your custom listener
+            var customListener = new MyCustomListener();
 
+            // Create a walker
+            var walker = new ParseTreeWalker();
+
+            // Walk the parse tree with your custom listener
+            walker.Walk(customListener, tree);
 
             //tree walker end
         }
