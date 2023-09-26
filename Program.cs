@@ -10,7 +10,11 @@ namespace _219003234_Parser
 
     class Program
     {
-
+        /// <summary>
+        /// This method reads the contents from a file
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
         static string ReadTextFromFile(string filePath)
         {
             try
@@ -25,90 +29,90 @@ namespace _219003234_Parser
             }
         }
 
-
+        /// <summary>
+        /// The main method where the program runs
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             //scanner start
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
             string dataFolderPath = Path.Combine(projectDirectory, "sample programs");
             string filename = "sample8.txt";
-           // bool continuee = true;
-         
-            // ParsingTable parsingTable1 = new ParsingTable();
-           // while (continuee == true)
-           // {
-                Console.WriteLine("Enter number to load file from 1 to 8 (any other input will result in file 8 being loaded):");
-                string fileNumber = Console.ReadLine();
+            // bool continuee = true;
 
-                switch (fileNumber)
-                {
-                    case "1":
-                        filename = "sample1.txt";
-                        break;
-                    case "2":
-                        filename = "sample2.txt";
-                        break;
-                    case "3":
-                        filename = "sample3.txt";
-                        break;
-                    case "4":
-                        filename = "sample4.txt";
-                        break;
-                    case "5":
-                        filename = "sample5.txt";
-                        break;
-                    case "6":
-                        filename = "sample6.txt";
-                        break;
-                    case "7":
-                        filename = "sample7.txt";
-                        break;
-                    case "8":
-                        filename = "sample8.txt";
-                        break;
-                    default:
-                        filename = "sample8.txt";
-                        break;
-                }
+            // while (continuee == true)
+            // {
+            Console.WriteLine("Enter number to load file from 1 to 8 (any other input will result in file 8 being loaded):");
+            string fileNumber = Console.ReadLine();
 
-                string filePath = Path.Combine(dataFolderPath, filename);
-                Console.WriteLine(filePath);
+            switch (fileNumber)
+            {
+                case "1":
+                    filename = "sample1.txt";
+                    break;
+                case "2":
+                    filename = "sample2.txt";
+                    break;
+                case "3":
+                    filename = "sample3.txt";
+                    break;
+                case "4":
+                    filename = "sample4.txt";
+                    break;
+                case "5":
+                    filename = "sample5.txt";
+                    break;
+                case "6":
+                    filename = "sample6.txt";
+                    break;
+                case "7":
+                    filename = "sample7.txt";
+                    break;
+                case "8":
+                    filename = "sample8.txt";
+                    break;
+                default:
+                    filename = "sample8.txt";
+                    break;
+            }
 
-                string input = ReadTextFromFile(filePath);
+            string filePath = Path.Combine(dataFolderPath, filename);
+            Console.WriteLine(filePath);
 
-                // Print the contents from the file to the screen
-                Console.WriteLine(input);
-                Console.WriteLine("\n");
+            string input = ReadTextFromFile(filePath);
 
-                // Create an instance of the Scanner class and tokenize the input
-                Scanner scanner = new Scanner();
-                List<Token> tokens = scanner.Tokenize(input);
-                tokens = scanner.Tokenize(input);
-                List<string> inputTokens = new List<string>();
+            // Print the contents from the file to the screen
+            Console.WriteLine(input);
+            Console.WriteLine("\n");
 
-            string scannerTokens = new string(""); 
-                // Print out the type and lexeme pairs from the tokenized input
-                foreach (Token token in tokens)
-                {
-                    //Console.WriteLine($"Type: {token.Type}, Lexeme: {token.Lexeme}");
-                    // Console.WriteLine(token.Lexeme +" = " + token.Type);
-                    Console.WriteLine(token.Lexeme + " = " + token.Type + " ");
-                 //   Console.WriteLine(token.Type + " ");
-                    inputTokens.Add(token.Type);
-                    scannerTokens += token.Type + " ";
-                    //Console.WriteLine(token.Type);
-                }
+            //This creates an instance of the Scanner class and tokenize the input
+            Scanner scanner = new Scanner();
+            List<Token> tokens = scanner.Tokenize(input);
+            tokens = scanner.Tokenize(input);
+            List<string> inputTokens = new List<string>();
+
+            string scannerTokens = new string("");
+          
+            // Print out the type and lexeme pairs from the tokenized input
+            foreach (Token token in tokens)
+            {
+                //Console.WriteLine($"Type: {token.Type}, Lexeme: {token.Lexeme}");
+                // Console.WriteLine(token.Lexeme +" = " + token.Type);
+                Console.WriteLine(token.Lexeme + " = " + token.Type + " ");
+                //   Console.WriteLine(token.Type + " ");
+                inputTokens.Add(token.Type);
+                scannerTokens += token.Type + " ";
+                //Console.WriteLine(token.Type);
+            }
 
             //    }
 
 
 
             //scanner end
-            //          Console.WriteLine("Enter an expression: ");
-            //         string input = Console.ReadLine();
 
-            // Create an instance of the ANTLR character stream
-           // scannerTokens = "INGREDIENT ID AS STRING SEMICOLON";
+            //parser start
             ICharStream stream = new AntlrInputStream(scannerTokens);
             Console.WriteLine("ANTLR Character Stream:\n" + stream.ToString() + "\n");
 
@@ -122,7 +126,7 @@ namespace _219003234_Parser
             foreach (var token in tokens2.GetTokens())
             {
                 Console.WriteLine($"Token: {token.Type} '{token.Text}' at {token.StartIndex}:{token.StopIndex}");
-           
+
             }
 
             // Create the parser
@@ -132,6 +136,14 @@ namespace _219003234_Parser
             IParseTree tree = parser.program();
             Console.WriteLine("\nParse Tree:");
             Console.WriteLine(tree.ToStringTree(parser));
+
+
+            //parser end
+
+            //tree walker start
+
+
+            //tree walker end
         }
     }
 }
