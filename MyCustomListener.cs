@@ -64,6 +64,16 @@ namespace _219003234_Parser
         public override void EnterIngredientDeclaration([NotNull] RecipeLanguageParser.IngredientDeclarationContext context)
         {
             Console.WriteLine("EnterIngredientDeclaration");
+            // Access the values of INGREDIENT, ID, and STRING
+            string ingredientType = context.INGREDIENT().GetText();
+            string ingredientName = context.ID().GetText();
+            string ingredientValue = context.STRING().GetText();
+
+            // Now you can work with these values
+            Console.WriteLine($"Ingredient Type: {ingredientType}");
+            Console.WriteLine($"Ingredient Name: {ingredientName}");
+            Console.WriteLine($"Ingredient Value: {ingredientValue}");
+
         }
 
         public override void ExitIngredientDeclaration([NotNull] RecipeLanguageParser.IngredientDeclarationContext context)
