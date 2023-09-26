@@ -37,8 +37,8 @@ namespace _219003234_Naidoo_KN_CC
 ("STAR", new Regex(@"\*")),
 ("EQUAL", new Regex(@"==")),
 ("THEN", new Regex(@"\bTHEN\b")),
-("FUNCTION_CALL", new Regex(@"@([a-zA-Z]|[0-9])([a-zA-Z]|[0-9])*\(.*\);")),
-
+//("FUNCTION_CALL", new Regex(@"@([a-zA-Z]|[0-9])([a-zA-Z]|[0-9])*\(.*\);")),
+("FUNCTION_CALL", new Regex(@"@")),
 ("ASSIGN", new Regex(@"=")),
 //("EQUAL", new Regex(@"==")),
 ("NEQ", new Regex(@"<>")),
