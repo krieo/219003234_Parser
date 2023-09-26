@@ -53,7 +53,7 @@ namespace _219003234_Naidoo_KN_CC
 ("RIGHTBRACKET", new Regex(@"\]")),
 //("STRINGLIT", new Regex(@"""(?:[a-zA-Z0-9~!@#$%^&*`()\[\]_\-+=|{};:<>,.?\\])*")),
 ("STRINGLIT", new Regex(@"""(?:[^""\\]|\\.)*""")),
-
+    ("AND", new Regex(@"\bAND\b")),
 ("INTEGERLIT", new Regex(@"[0-9]+")),
 ("FLOATLIT", new Regex(@"[0-9]*\.[0-9]*")),
 ("BOOLLITTRUE", new Regex(@"\bTRUE\b")),
