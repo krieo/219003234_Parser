@@ -33,7 +33,7 @@ namespace _219003234_Naidoo_KN_CC
 ("IF", new Regex(@"\bIF\b")),
 ("PLUS", new Regex(@"\+")),
 ("MINUS", new Regex(@"\-")),
-("FORWARD SLASH", new Regex(@"/")),
+("FORWARD_SLASH", new Regex(@"/")),
 ("STAR", new Regex(@"\*")),
 ("EQUAL", new Regex(@"==")),
 ("THEN", new Regex(@"\bTHEN\b")),
