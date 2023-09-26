@@ -171,13 +171,13 @@ public interface IRecipeLanguageListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitConditionalStatement([NotNull] RecipeLanguageParser.ConditionalStatementContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.expression"/>.
+	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.condition"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterExpression([NotNull] RecipeLanguageParser.ExpressionContext context);
+	void EnterCondition([NotNull] RecipeLanguageParser.ConditionContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.expression"/>.
+	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.condition"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitExpression([NotNull] RecipeLanguageParser.ExpressionContext context);
+	void ExitCondition([NotNull] RecipeLanguageParser.ConditionContext context);
 }

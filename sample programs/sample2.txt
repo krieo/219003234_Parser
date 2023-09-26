@@ -1,18 +1,16 @@
-RECIPE CountToTen
+RECIPE FunctionCallWithArray
 DO
 METHOD Main() AS INTEGER
 DO
-INGREDIENT count AS INTEGER;
-count = 1;
-LOOP WHILE count <= 10 DO
-IF count == 3 THEN
-SPEAK("3 spoons of sugar");
-ELSE IF count == 5 THEN
-SPEAK("Five cups of flour");
+INGREDIENT i AS INTEGER;
+i = 0;
+LOOP WHILE i < 10 DO
+IF i > 1 AND i < 10 THEN
+SPEAK("use 1 cup sugar");
 ELSE
-SPEAK(count);
+SPEAK("Don’t add sugar");
 DONE
-count = count + 1;
+i = i + 1;
 DONE
 SHARE 0;
 DONE
