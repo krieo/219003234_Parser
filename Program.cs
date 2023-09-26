@@ -129,7 +129,7 @@ namespace _219003234_Parser
             RecipeLanguageParser parser = new RecipeLanguageParser(tokens2);
 
             // Parse the input
-            IParseTree tree = parser.recipe();
+            IParseTree tree = parser.program();
             Console.WriteLine("\nParse Tree:");
             Console.WriteLine(tree.ToStringTree(parser));
         }

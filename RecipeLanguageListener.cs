@@ -41,26 +41,6 @@ public interface IRecipeLanguageListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitProgram([NotNull] RecipeLanguageParser.ProgramContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.recipe"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterRecipe([NotNull] RecipeLanguageParser.RecipeContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.recipe"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitRecipe([NotNull] RecipeLanguageParser.RecipeContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.statement_list"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterStatement_list([NotNull] RecipeLanguageParser.Statement_listContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.statement_list"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitStatement_list([NotNull] RecipeLanguageParser.Statement_listContext context);
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.statement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -71,45 +51,65 @@ public interface IRecipeLanguageListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitStatement([NotNull] RecipeLanguageParser.StatementContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.method"/>.
+	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.askStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterMethod([NotNull] RecipeLanguageParser.MethodContext context);
+	void EnterAskStatement([NotNull] RecipeLanguageParser.AskStatementContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.method"/>.
+	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.askStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitMethod([NotNull] RecipeLanguageParser.MethodContext context);
+	void ExitAskStatement([NotNull] RecipeLanguageParser.AskStatementContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.ingredient"/>.
+	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.declaration"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterIngredient([NotNull] RecipeLanguageParser.IngredientContext context);
+	void EnterDeclaration([NotNull] RecipeLanguageParser.DeclarationContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.ingredient"/>.
+	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.declaration"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitIngredient([NotNull] RecipeLanguageParser.IngredientContext context);
+	void ExitDeclaration([NotNull] RecipeLanguageParser.DeclarationContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.ask"/>.
+	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.ingredientDeclaration"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterAsk([NotNull] RecipeLanguageParser.AskContext context);
+	void EnterIngredientDeclaration([NotNull] RecipeLanguageParser.IngredientDeclarationContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.ask"/>.
+	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.ingredientDeclaration"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitAsk([NotNull] RecipeLanguageParser.AskContext context);
+	void ExitIngredientDeclaration([NotNull] RecipeLanguageParser.IngredientDeclarationContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.speak"/>.
+	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.arrayDeclaration"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterSpeak([NotNull] RecipeLanguageParser.SpeakContext context);
+	void EnterArrayDeclaration([NotNull] RecipeLanguageParser.ArrayDeclarationContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.speak"/>.
+	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.arrayDeclaration"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitSpeak([NotNull] RecipeLanguageParser.SpeakContext context);
+	void ExitArrayDeclaration([NotNull] RecipeLanguageParser.ArrayDeclarationContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.speakStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterSpeakStatement([NotNull] RecipeLanguageParser.SpeakStatementContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.speakStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitSpeakStatement([NotNull] RecipeLanguageParser.SpeakStatementContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.shareStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterShareStatement([NotNull] RecipeLanguageParser.ShareStatementContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.shareStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitShareStatement([NotNull] RecipeLanguageParser.ShareStatementContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.assignment"/>.
 	/// </summary>
@@ -121,33 +121,53 @@ public interface IRecipeLanguageListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitAssignment([NotNull] RecipeLanguageParser.AssignmentContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.loop"/>.
+	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.recipeStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterLoop([NotNull] RecipeLanguageParser.LoopContext context);
+	void EnterRecipeStatement([NotNull] RecipeLanguageParser.RecipeStatementContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.loop"/>.
+	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.recipeStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitLoop([NotNull] RecipeLanguageParser.LoopContext context);
+	void ExitRecipeStatement([NotNull] RecipeLanguageParser.RecipeStatementContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.conditional"/>.
+	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.methodStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterConditional([NotNull] RecipeLanguageParser.ConditionalContext context);
+	void EnterMethodStatement([NotNull] RecipeLanguageParser.MethodStatementContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.conditional"/>.
+	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.methodStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitConditional([NotNull] RecipeLanguageParser.ConditionalContext context);
+	void ExitMethodStatement([NotNull] RecipeLanguageParser.MethodStatementContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.block"/>.
+	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.functionCall"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterBlock([NotNull] RecipeLanguageParser.BlockContext context);
+	void EnterFunctionCall([NotNull] RecipeLanguageParser.FunctionCallContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.block"/>.
+	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.functionCall"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitBlock([NotNull] RecipeLanguageParser.BlockContext context);
+	void ExitFunctionCall([NotNull] RecipeLanguageParser.FunctionCallContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.loopStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterLoopStatement([NotNull] RecipeLanguageParser.LoopStatementContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.loopStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitLoopStatement([NotNull] RecipeLanguageParser.LoopStatementContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.conditionalStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterConditionalStatement([NotNull] RecipeLanguageParser.ConditionalStatementContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.conditionalStatement"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitConditionalStatement([NotNull] RecipeLanguageParser.ConditionalStatementContext context);
 }
