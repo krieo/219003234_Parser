@@ -138,6 +138,12 @@ namespace _219003234_Parser
             Console.WriteLine(tree.ToStringTree(parser));
 
 
+            // Create your custom listener
+            var myListener = new MyCustomListener();
+
+            // Walk the parse tree using your custom listener
+            ParseTreeWalker.Default.Walk(myListener, tree);
+
             //parser end
 
             //tree walker start
