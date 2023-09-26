@@ -1,20 +1,15 @@
-RECIPE BooleanExample
+RECIPE BooleanShow
 DO
 METHOD Main() AS INTEGER
 DO
-INGREDIENT isWet AS BOOL;
-isWet = TRUE;
-INGREDIENT isCake AS BOOL;
-isCake = FALSE;
-IF isWet THEN
-SPEAK("Add more flour");
+INGREDIENT x AS BOOL;
+x = TRUE;
+INGREDIENT Y AS BOOL;
+Y = TRUE;
+IF x == Y THEN
+SPEAK("use 1 cup sugar");
 ELSE
-SPEAK("Bake");
-DONE
-IF isCake THEN
-SPEAK("Time to eat");
-ELSE
-SPEAK("no cake as yet :(");
+SPEAK("Don’t add sugar");
 DONE
 SHARE 0;
 DONE

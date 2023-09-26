@@ -1,4 +1,4 @@
-RECIPE FunctionCallWithArray
+RECIPE LoopsAndIfs
 DO
 METHOD Main() AS INTEGER
 DO
