@@ -36,6 +36,18 @@ using ParserRuleContext = Antlr4.Runtime.ParserRuleContext;
 [System.CLSCompliant(false)]
 public partial class RecipeLanguageBaseListener : IRecipeLanguageListener {
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.program"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterProgram([NotNull] RecipeLanguageParser.ProgramContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.program"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitProgram([NotNull] RecipeLanguageParser.ProgramContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.recipe"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -131,6 +143,42 @@ public partial class RecipeLanguageBaseListener : IRecipeLanguageListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitAssignment([NotNull] RecipeLanguageParser.AssignmentContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.loop"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterLoop([NotNull] RecipeLanguageParser.LoopContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.loop"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitLoop([NotNull] RecipeLanguageParser.LoopContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.conditional"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterConditional([NotNull] RecipeLanguageParser.ConditionalContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.conditional"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitConditional([NotNull] RecipeLanguageParser.ConditionalContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.block"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterBlock([NotNull] RecipeLanguageParser.BlockContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.block"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitBlock([NotNull] RecipeLanguageParser.BlockContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>
