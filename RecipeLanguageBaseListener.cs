@@ -203,6 +203,18 @@ public partial class RecipeLanguageBaseListener : IRecipeLanguageListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitConditionalStatement([NotNull] RecipeLanguageParser.ConditionalStatementContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="RecipeLanguageParser.expression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterExpression([NotNull] RecipeLanguageParser.ExpressionContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="RecipeLanguageParser.expression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitExpression([NotNull] RecipeLanguageParser.ExpressionContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>
