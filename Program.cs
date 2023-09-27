@@ -128,7 +128,7 @@ namespace _219003234_Parser
                 Console.WriteLine($"Token: {token.Type} '{token.Text}' at {token.StartIndex}:{token.StopIndex}");
             }
 
-            CustomTokenStream myToken = new CustomTokenStream(tokens2);
+            CustomTokenStream myToken = new CustomTokenStream(tokens2,tokens);
 
             myToken.Fill();
             foreach (var token in myToken.GetTokens())

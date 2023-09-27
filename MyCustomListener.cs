@@ -68,7 +68,7 @@ namespace _219003234_Parser
             string ingredientType = context.INGREDIENT().GetText();
             string ingredientName = context.ID().GetText();
             string ingredientValue = context.STRING().GetText();
-
+            
             // Now you can work with these values
             Console.WriteLine($"Ingredient Type: {ingredientType}");
             Console.WriteLine($"Ingredient Name: {ingredientName}");
@@ -104,6 +104,7 @@ namespace _219003234_Parser
         public override void EnterShareStatement([NotNull] RecipeLanguageParser.ShareStatementContext context)
         {
             Console.WriteLine("EnterShareStatement");
+           Console.WriteLine("THISSSSSSSSSSSSSSSSSSSSSSSS"+context.INTEGERLIT().GetText());
         }
 
         public override void ExitShareStatement([NotNull] RecipeLanguageParser.ShareStatementContext context)
