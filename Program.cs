@@ -126,11 +126,19 @@ namespace _219003234_Parser
             foreach (var token in tokens2.GetTokens())
             {
                 Console.WriteLine($"Token: {token.Type} '{token.Text}' at {token.StartIndex}:{token.StopIndex}");
+            }
 
+            CustomTokenStream myToken = new CustomTokenStream(tokens2);
+
+            myToken.Fill();
+            foreach (var token in myToken.GetTokens())
+            {
+                Console.WriteLine($"Token: {token.Type} '{token.Text}' at {token.StartIndex}:{token.StopIndex}");
+                
             }
 
             // Create the parser
-            RecipeLanguageParser parser = new RecipeLanguageParser(tokens2);
+            RecipeLanguageParser parser = new RecipeLanguageParser(myToken);
 
             // Parse the input
             IParseTree tree = parser.program();
