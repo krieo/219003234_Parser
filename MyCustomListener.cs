@@ -36,15 +36,15 @@ namespace _219003234_Parser
         //  }
         public override void EnterAskStatement([NotNull] RecipeLanguageParser.AskStatementContext context)
         {
-            
+            Console.WriteLine("EnterAskStatement");
             // Get the ID (variable name) from the context
-            string variableName = context.ID().GetText();
+            //string variableName = context.ID().GetText();
             // Prompt the user for input
-       //     Console.Write($"Enter a value for '{variableName}': ");
+            //     Console.Write($"Enter a value for '{variableName}': ");
             // Read the user's input
-         //   string userInput = Console.ReadLine();
-          //  askInput = userInput;
-           // Console.WriteLine($"You entered: {userInput}");
+            //   string userInput = Console.ReadLine();
+            //  askInput = userInput;
+            // Console.WriteLine($"You entered: {userInput}");
         }
         public override void ExitAskStatement([NotNull] RecipeLanguageParser.AskStatementContext context)
         {
