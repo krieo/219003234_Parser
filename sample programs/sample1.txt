@@ -3,9 +3,12 @@ DO
 METHOD Main() AS INTEGER
 DO
 INGREDIENT name AS STRING;
+INGREDIENT promptMessage AS STRING;
+promptMessage = " Hello, Please enter your name";
+SPEAK(promptMessage);
 ASK(name);
 INGREDIENT message AS STRING;
-message = "Hello, " + name + "!";
+message = "Hello, " + name + "! and welcome to the first program";
 SPEAK(message);
 SHARE 0;
 DONE
