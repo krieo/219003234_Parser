@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using Antlr4.Runtime.Misc;
 
@@ -281,15 +282,180 @@ namespace _219003234_Parser
 
                     Console.WriteLine(result + " THIS IS WHAT WE HAVE OUT RESUTL AS");
                 }
+                //This sorts the integer parts of the assignment
                 else if (variablesInteger.ContainsKey(lhs))
                 {
                     // LHS is an integer variable, so perform integer addition
 
+                    // Use stacks for operator precedence
+                    Stack<string> operators = new Stack<string>();
+                    Queue<string> outputQueue = new Queue<string>();
+
+                    int childIndex = 0;
+                    int result = 0;
+
+                    while (true)
+                    {
+                        var child = context.GetChild(childIndex);
+
+                        if (child == null)
+                        {
+                            break; // No more children, exit the loop
+                        }
+                        else
+                        {
+                            string token = child.GetText();
+
+                            if (int.TryParse(token, out int intValue))
+                            {
+                                // If it's a number, add it to the output queue
+                                outputQueue.Enqueue(intValue.ToString());
+                            }
+                            else if (token == "+" || token == "-" || token == "*" || token == "/")
+                            {
+                                // If it's an operator
+                                while (operators.Count > 0 && GetPrecedence(operators.Peek()) >= GetPrecedence(token))
+                                {
+                                    // Pop operators with higher or equal precedence and enqueue them
+                                    outputQueue.Enqueue(operators.Pop());
+                                }
+                                operators.Push(token);
+                            }
+                        }
+
+                        childIndex++;
+                    }
+
+                    // Enqueue remaining operators to output
+                    while (operators.Count > 0)
+                    {
+                        outputQueue.Enqueue(operators.Pop());
+                    }
+
+                    // Evaluate the RPN expression
+                    Stack<int> evalStack = new Stack<int>();
+
+                    foreach (var item in outputQueue)
+                    {
+                        if (int.TryParse(item, out int intValue))
+                        {
+                            evalStack.Push(intValue);
+                        }
+                        else
+                        {
+                            int b = evalStack.Pop();
+                            int a = evalStack.Pop();
+
+                            switch (item)
+                            {
+                                case "+":
+                                    evalStack.Push(a + b);
+                                    break;
+                                case "-":
+                                    evalStack.Push(a - b);
+                                    break;
+                                case "*":
+                                    evalStack.Push(a * b);
+                                    break;
+                                case "/":
+                                    evalStack.Push(a / b);
+                                    break;
+                            }
+                        }
+                    }
+
+                    result = evalStack.Pop();
+                    variablesInteger[lhs] = result;
+
+                    Console.WriteLine("Result of expression: " + result);
                 }
+
+                //This performs the assignment for the float variables
                 else if (variablesFloat.ContainsKey(lhs))
                 {
                     // LHS is a float variable, so perform float addition
-                   // variablesFloat[lhs] = PerformFloatAddition(rhs, lhs);
+                    
+                    // Use stacks for operator precedence
+                    Stack<string> operators = new Stack<string>();
+                    Queue<string> outputQueue = new Queue<string>();
+
+                    int childIndex = 0;
+                    float result = 0;
+
+                    while (true)
+                    {
+                        var child = context.GetChild(childIndex);
+
+                        if (child == null)
+                        {
+                            break; // No more children, exit the loop
+                        }
+                        else
+                        {
+                            string token = child.GetText();
+
+                            if (float.TryParse(token, out float floatValue))
+                            {
+                                // If it's a number, add it to the output queue
+                                outputQueue.Enqueue(floatValue.ToString());
+                            }
+                            else if (token == "+" || token == "-" || token == "*" || token == "/")
+                            {
+                                // If it's an operator
+                                while (operators.Count > 0 && GetPrecedence(operators.Peek()) >= GetPrecedence(token))
+                                {
+                                    // Pop operators with higher or equal precedence and enqueue them
+                                    outputQueue.Enqueue(operators.Pop());
+                                }
+                                operators.Push(token);
+                            }
+                        }
+
+                        childIndex++;
+                    }
+
+                    // Enqueue remaining operators to output
+                    while (operators.Count > 0)
+                    {
+                        outputQueue.Enqueue(operators.Pop());
+                    }
+
+                    // Evaluate the RPN expression
+                    Stack<float> evalStack = new Stack<float>();
+
+                    foreach (var item in outputQueue)
+                    {
+                        if (float.TryParse(item, out float intValue))
+                        {
+                            evalStack.Push(intValue);
+                        }
+                        else
+                        {
+                            float b = evalStack.Pop();
+                            float a = evalStack.Pop();
+
+                            switch (item)
+                            {
+                                case "+":
+                                    evalStack.Push(a + b);
+                                    break;
+                                case "-":
+                                    evalStack.Push(a - b);
+                                    break;
+                                case "*":
+                                    evalStack.Push(a * b);
+                                    break;
+                                case "/":
+                                    evalStack.Push(a / b);
+                                    break;
+                            }
+                        }
+                    }
+
+                    result = evalStack.Pop();
+                    variablesFloat[lhs] = result;
+
+                    Console.WriteLine("Result of expression: " + result);
                 }
                 else
                 {
@@ -304,6 +470,21 @@ namespace _219003234_Parser
             Console.WriteLine("ExitAssignment");
         }
 
+        // Function to get operator precedence
+        int GetPrecedence(string op)
+        {
+            switch (op)
+            {
+                case "+":
+                case "-":
+                    return 1;
+                case "*":
+                case "/":
+                    return 2;
+                default:
+                    return 0;
+            }
+        }
         public override void ExitAssignment([NotNull] RecipeLanguageParser.AssignmentContext context)
         {
             Console.WriteLine("ExitAssignment");

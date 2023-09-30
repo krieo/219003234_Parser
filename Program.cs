@@ -43,7 +43,7 @@ namespace _219003234_Parser
 
             // while (continuee == true)
             // {
-            Console.WriteLine("Enter number to load file from 1 to 8 (any other input will result in file 8 being loaded):");
+            Console.WriteLine("Enter number to load file from 1 to 9 (any other input will result in file 8 being loaded):");
             string fileNumber = Console.ReadLine();
 
             switch (fileNumber)
@@ -71,6 +71,9 @@ namespace _219003234_Parser
                     break;
                 case "8":
                     filename = "sample8.txt";
+                    break;
+                case "9":
+                    filename = "sample9.txt";
                     break;
                 default:
                     filename = "sample8.txt";
