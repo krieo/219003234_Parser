@@ -8,6 +8,10 @@ namespace _219003234_Parser
     {
 
         private string askInput = "";
+        // Declare the dictionary
+        Dictionary<string, object> variablesString = new Dictionary<string, object>();
+        Dictionary<string, object> variablesInteger = new Dictionary<string, object>();
+        Dictionary<string, object> variablesFloat = new Dictionary<string, object>();
 
         public override void EnterProgram([NotNull] RecipeLanguageParser.ProgramContext context)
         {
@@ -64,15 +68,63 @@ namespace _219003234_Parser
         public override void EnterIngredientDeclaration([NotNull] RecipeLanguageParser.IngredientDeclarationContext context)
         {
             Console.WriteLine("EnterIngredientDeclaration");
-            // Access the values of INGREDIENT, ID, and STRING
-            string ingredientType = context.INGREDIENT().GetText();
-            string ingredientName = context.ID().GetText();
-            string ingredientValue = context.STRING().GetText();
-            
-            // Now you can work with these values
-            Console.WriteLine($"Ingredient Type: {ingredientType}");
-            Console.WriteLine($"Ingredient Name: {ingredientName}");
-            Console.WriteLine($"Ingredient Value: {ingredientValue}");
+
+            //This is used to store integer variables in a list
+            if (context.INTEGER() != null)
+            {
+                Console.WriteLine(context.INTEGER().GetText() + " THIS IS THE INTEGER ===========================================");
+                Console.WriteLine(context.ID().GetText() + " THIS IS THE id ===========================================");
+                //This checks if the variable is in the dictionary if its not it adds the entry if it is it shows an error
+                if (!variablesInteger.ContainsKey(context.ID().GetText()))
+                {
+                    variablesInteger.Add(context.ID().GetText(), 0);
+                    Console.WriteLine($"Variable '{context.ID().GetText()}' added with value: {0}");
+                }
+                else
+                {
+                    Console.WriteLine($"Error: Variable '{context.ID().GetText()}' already exists.");
+                }
+
+            }
+
+            //This is used to store string variables in a list
+            if (context.STRING() != null)
+            {
+                Console.WriteLine(context.STRING().GetText() + " THIS IS THE STRING ===========================================");
+                Console.WriteLine(context.ID().GetText() + " THIS IS THE id ===========================================");
+                //This checks if the variable is in the dictionary if its not it adds the entry if it is it shows an error
+                if (!variablesString.ContainsKey(context.ID().GetText()))
+                {
+                    variablesString.Add(context.ID().GetText(), "");
+                    Console.WriteLine($"Variable '{context.ID().GetText()}' added with value: {""}");
+                }
+                else
+                {
+                    Console.WriteLine($"Error: Variable '{context.ID().GetText()}' already exists.");
+                }
+
+            }
+
+
+
+            //This is used to store FLOAT variables in a list
+            if (context.FLOAT() != null)
+            {
+                Console.WriteLine(context.FLOAT().GetText() + " THIS IS THE FLOAT ===========================================");
+                Console.WriteLine(context.ID().GetText() + " THIS IS THE id ===========================================");
+                //This checks if the variable is in the dictionary if its not it adds the entry if it is it shows an error
+                if (!variablesFloat.ContainsKey(context.ID().GetText()))
+                {
+                    variablesFloat.Add(context.ID().GetText(), 0.0);
+                    Console.WriteLine($"Variable '{context.ID().GetText()}' added with value: {0.0}");
+                }
+                else
+                {
+                    Console.WriteLine($"Error: Variable '{context.ID().GetText()}' already exists.");
+                }
+
+            }
+
 
         }
 
