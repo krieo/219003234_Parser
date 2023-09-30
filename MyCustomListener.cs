@@ -38,18 +38,57 @@ namespace _219003234_Parser
         //  {
         //     Console.WriteLine("EnterAskStatement");
         //  }
+
+        /// <summary>
+        /// This method performs the ask statement which is essentially console.readline
+        /// </summary>
+        /// <param name="context"></param>
         public override void EnterAskStatement([NotNull] RecipeLanguageParser.AskStatementContext context)
         {
             Console.WriteLine("EnterAskStatement");
-            // Get the ID (variable name) from the context
-            //string variableName = context.ID().GetText();
+            string variableName = context.ID().GetText(); // Get the variable name
+
             // Prompt the user for input
-            //     Console.Write($"Enter a value for '{variableName}': ");
+            Console.Write($"Enter a value for '{variableName}': ");
+
             // Read the user's input
-            //   string userInput = Console.ReadLine();
-            //  askInput = userInput;
-            // Console.WriteLine($"You entered: {userInput}");
+            string userInput = Console.ReadLine();
+
+            // Determine the variable type and store the input value accordingly
+            if (variablesString.ContainsKey(variableName))
+            {
+                variablesString[variableName] = userInput; // Update the string variable
+            }
+            else if (variablesInteger.ContainsKey(variableName))
+            {
+                int intValue;
+                if (int.TryParse(userInput, out intValue))
+                {
+                    variablesInteger[variableName] = intValue; // Update the integer variable
+                }
+                else
+                {
+                    Console.WriteLine($"Error: Input is not a valid integer for '{variableName}'.");
+                }
+            }
+            else if (variablesFloat.ContainsKey(variableName))
+            {
+                float floatValue;
+                if (float.TryParse(userInput, out floatValue))
+                {
+                    variablesFloat[variableName] = floatValue; // Update the float variable
+                }
+                else
+                {
+                    Console.WriteLine($"Error: Input is not a valid float for '{variableName}'.");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Error: Variable '{variableName}' not found.");
+            }
         }
+
         public override void ExitAskStatement([NotNull] RecipeLanguageParser.AskStatementContext context)
         {
             Console.WriteLine("ExitAskStatement");
