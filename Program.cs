@@ -132,7 +132,7 @@ namespace _219003234_Parser
             }
 
             CustomTokenStream myToken = new CustomTokenStream(tokens2,tokens);
-
+            Console.WriteLine("Lexer Output with symbols placed in:\n");
             myToken.Fill();
             foreach (var token in myToken.GetTokens())
             {
@@ -148,12 +148,13 @@ namespace _219003234_Parser
             Console.WriteLine("\nParse Tree:");
             Console.WriteLine(tree.ToStringTree(parser));
 
+            Console.WriteLine("\nThis is the start of the program\n");
 
             // Create your custom listener
-          //  var myListener = new MyCustomListener();
+            //  var myListener = new MyCustomListener();
 
             // Walk the parse tree using your custom listener
-           // ParseTreeWalker.Default.Walk(myListener, tree);
+            // ParseTreeWalker.Default.Walk(myListener, tree);
 
             //parser end
 

@@ -1,22 +1,13 @@
-RECIPE simpleMath
+RECIPE HelloWorld
 DO
 METHOD Main() AS INTEGER
 DO
-INGREDIENT name AS INTEGER;
-name = 1 + 2 + 3;
-SPEAK(name);
-INGREDIENT sum AS INTEGER;
-sum = 1 + 2 + 3 - 5 + 7 - 1;
-SPEAK(sum);
-INGREDIENT sumMul AS INTEGER;
-sumMul = 1 + 2 * 3 + 4 + 2 * 3 + 4 * 9 + 12;
-SPEAK(sumMul);
-INGREDIENT sumMu2 AS INTEGER;
-sumMu2 = 5/5;
-SPEAK(sumMu2);
-INGREDIENT sumMu3 AS FLOAT;
-sumMu2 = 10/5;
-SPEAK(sumMu3);
+INGREDIENT SUM AS INTEGER;
+INGREDIENT SUM2 AS FLOAT;
+SUM = 1 + 2 * 4 + 7 * 2;
+SUM2 = 10/5; 
+SPEAK(SUM);
+SPEAK(SUM2);
 SHARE 0;
 DONE
 DONE
