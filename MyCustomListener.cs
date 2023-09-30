@@ -65,6 +65,10 @@ namespace _219003234_Parser
             Console.WriteLine("ExitDeclaration");
         }
 
+        /// <summary>
+        /// This method is used to create variables
+        /// </summary>
+        /// <param name="context"></param>
         public override void EnterIngredientDeclaration([NotNull] RecipeLanguageParser.IngredientDeclarationContext context)
         {
             Console.WriteLine("EnterIngredientDeclaration");
@@ -95,8 +99,8 @@ namespace _219003234_Parser
                 //This checks if the variable is in the dictionary if its not it adds the entry if it is it shows an error
                 if (!variablesString.ContainsKey(context.ID().GetText()))
                 {
-                    variablesString.Add(context.ID().GetText(), "");
-                    Console.WriteLine($"Variable '{context.ID().GetText()}' added with value: {""}");
+                    variablesString.Add(context.ID().GetText(), "empty variable");
+                    Console.WriteLine($"Variable '{context.ID().GetText()}' added with value: {"empty variable"}");
                 }
                 else
                 {
@@ -143,9 +147,44 @@ namespace _219003234_Parser
             Console.WriteLine("ExitArrayDeclaration");
         }
 
+        /// <summary>
+        /// This method is used to print items to the screen
+        /// </summary>
+        /// <param name="context"></param>
         public override void EnterSpeakStatement([NotNull] RecipeLanguageParser.SpeakStatementContext context)
         {
             Console.WriteLine("EnterSpeakStatement");
+
+            if (context.ID() != null) 
+            {
+                Console.WriteLine(context.ID().GetText() + "THIS IS THE SPEAK STATEMENT ====================");
+                string valueToPrint = context.ID().GetText();
+
+                //this checks if the variable is in the list and prints the message to the screen
+                if (variablesString.ContainsKey(valueToPrint))
+                {
+                    Console.WriteLine(variablesString[valueToPrint] + " VALUE STRING FOUND +++++++++++++++++++++");
+                  
+                }
+                else if (variablesInteger.ContainsKey(valueToPrint))
+                {
+                    Console.WriteLine(variablesInteger[valueToPrint] + " VALUE INTEGER FOUND +++++++++++++++++++++");
+                }
+                else if (variablesFloat.ContainsKey(valueToPrint))
+                {
+                    Console.WriteLine(variablesFloat[valueToPrint] + " VALUE FLOAT FOUND +++++++++++++++++++++");
+                }
+                else
+                {
+                    Console.WriteLine($"Variable '{valueToPrint}' not found.");
+                }
+            }
+
+            // Declare a variable and assign a value
+            // variables["myVar"] = 42;
+
+            // Access the variable
+            //int myVarValue = (int)variables["myVar"];
         }
 
         public override void ExitSpeakStatement([NotNull] RecipeLanguageParser.SpeakStatementContext context)
