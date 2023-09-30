@@ -377,8 +377,8 @@ namespace _219003234_Parser
                 //This performs the assignment for the float variables
                 else if (variablesFloat.ContainsKey(lhs))
                 {
-                    // LHS is a float variable, so perform float addition
-                    
+                    // LHS is an float variable, so perform float addition
+
                     // Use stacks for operator precedence
                     Stack<string> operators = new Stack<string>();
                     Queue<string> outputQueue = new Queue<string>();
@@ -397,7 +397,11 @@ namespace _219003234_Parser
                         else
                         {
                             string token = child.GetText();
-
+                            if (variablesFloat.ContainsKey(token))
+                            {
+                                string floatVariable = variablesFloat[token].ToString();
+                                token = floatVariable;
+                            }
                             if (float.TryParse(token, out float floatValue))
                             {
                                 // If it's a number, add it to the output queue
@@ -429,9 +433,9 @@ namespace _219003234_Parser
 
                     foreach (var item in outputQueue)
                     {
-                        if (float.TryParse(item, out float intValue))
+                        if (float.TryParse(item, out float floatValue))
                         {
-                            evalStack.Push(intValue);
+                            evalStack.Push(floatValue);
                         }
                         else
                         {
@@ -459,8 +463,9 @@ namespace _219003234_Parser
                     result = evalStack.Pop();
                     variablesFloat[lhs] = result;
 
-                 //   Console.WriteLine("Result of expression: " + result);
+                    //  Console.WriteLine("Result of expression: " + result);
                 }
+
                 else
                 {
                     Console.WriteLine($"Error: Variable '{lhs}' not found.");
