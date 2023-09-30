@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using Antlr4.Runtime.Misc;
 
 namespace _219003234_Parser
@@ -245,11 +246,68 @@ namespace _219003234_Parser
         public override void EnterAssignment([NotNull] RecipeLanguageParser.AssignmentContext context)
         {
             Console.WriteLine("EnterAssignment");
+            string assignmentStatement = context.GetText(); // Get the entire assignment statement
+            Console.WriteLine(assignmentStatement + " this is the assignement statement knadjfhiusfhieuwfnjksefhkfweewfwe");
+            // Split the assignment statement by the '=' operator
+            string[] assignmentParts = assignmentStatement.Split('=');
+
+            if (assignmentParts.Length == 2)
+            {
+                string lhs = assignmentParts[0].Trim(); // Left-hand side (variable name)
+                string rhs = assignmentParts[1].Trim(); // Right-hand side (expression)
+                Console.WriteLine(lhs + " this is the lhs statement knadjfhiusfhieuwfnjksefhkfweewfwe");
+                Console.WriteLine(rhs + " this is the rhs statement knadjfhiusfhieuwfnjksefhkfweewfwe");
+
+                // Check which dictionary the LHS variable is in
+                if (variablesString.ContainsKey(lhs))
+                {
+                    // LHS is a string variable, so perform string concatenation
+                    // variablesString[lhs] = PerformStringConcatenation(rhs);
+                    string[] terms = rhs.Split('+');
+                    string result = "";
+                    foreach (var item in terms) 
+                    {
+                        if (variablesString.ContainsKey(item))
+                        {
+                            result += (string)variablesString[item];
+                        }
+                        else
+                        { 
+                        result+= item;
+                        }
+                    }
+                    // Update the value of the LHS variable in the variablesString dictionary
+                    variablesString[lhs] = result;
+
+                    Console.WriteLine(result + " THIS IS WHAT WE HAVE OUT RESUTL AS");
+                }
+                else if (variablesInteger.ContainsKey(lhs))
+                {
+                    // LHS is an integer variable, so perform integer addition
+
+                }
+                else if (variablesFloat.ContainsKey(lhs))
+                {
+                    // LHS is a float variable, so perform float addition
+                   // variablesFloat[lhs] = PerformFloatAddition(rhs, lhs);
+                }
+                else
+                {
+                    Console.WriteLine($"Error: Variable '{lhs}' not found.");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Error: Invalid assignment statement: {assignmentStatement}");
+            }
+
+            Console.WriteLine("ExitAssignment");
         }
 
         public override void ExitAssignment([NotNull] RecipeLanguageParser.AssignmentContext context)
         {
             Console.WriteLine("ExitAssignment");
+
         }
 
         public override void EnterRecipeStatement([NotNull] RecipeLanguageParser.RecipeStatementContext context)
