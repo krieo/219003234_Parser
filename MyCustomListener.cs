@@ -681,20 +681,13 @@ namespace _219003234_Parser
                 string[] parts = conditionExpression.Split(new string[] { "AND" }, StringSplitOptions.RemoveEmptyEntries);
                 string logicalOperator = "AND";
                 string[] subConditions = parts[0].Split(new string[] { "==", ">", "<", "<>", ">=", "<=" }, StringSplitOptions.RemoveEmptyEntries);
-                
-      
-                        // Declare a variable and assign a value
-                        // variables["myVar"] = 42;
-
-                // Access the variable
-                //int myVarValue = (int)variables["myVar"];
 
                 if (int.TryParse(subConditions[0].Trim(), out int parsedValue))
                 {
                     // Parsing was successful, and parsedValue contains the integer value
                     lhs = parsedValue;
                 }
-                else 
+                else
                 {
                     int myVarValue = (int)variablesInteger[subConditions[0].Trim()];
                     lhs = myVarValue;
@@ -704,14 +697,15 @@ namespace _219003234_Parser
                 {
                     // Parsing was successful, and parsedValue contains the integer value
                     rhs = parsedValue2;
-                }else
+                }
+                else
                 {
                     int myVarValue = (int)variablesInteger[subConditions[1].Trim()];
                     rhs = myVarValue;
                 }
 
                 string[] subConditions2 = parts[1].Split(new string[] { "==", ">", "<", "<>", ">=", "<=" }, StringSplitOptions.RemoveEmptyEntries);
-            
+
                 if (int.TryParse(subConditions2[0].Trim(), out int parsedValue3))
                 {
                     // Parsing was successful, and parsedValue contains the integer value
@@ -738,8 +732,8 @@ namespace _219003234_Parser
 
                 bool value2ToCheck = false;
                 //this checks the operand
-                if (parts[0].Contains("==")){if (lhs == rhs){value1ToCheck = true;}}
-                else if (parts[0].Contains(">")){if (lhs > rhs) { value1ToCheck = true; }}
+                if (parts[0].Contains("==")) { if (lhs == rhs) { value1ToCheck = true; } }
+                else if (parts[0].Contains(">")) { if (lhs > rhs) { value1ToCheck = true; } }
                 else if (parts[0].Contains("<")) { if (lhs < rhs) { value1ToCheck = true; } }
                 else if (parts[0].Contains("<>")) { if (lhs != rhs) { value1ToCheck = true; } }
                 else if (parts[0].Contains(">=")) { if (lhs >= rhs) { value1ToCheck = true; } }
@@ -754,7 +748,118 @@ namespace _219003234_Parser
 
                 if (value1ToCheck == value2ToCheck) { return true; } else { return false; }
             }
-            return true;
+            else if (conditionExpression.Contains("OR"))
+            {
+                string[] parts = conditionExpression.Split(new string[] { "AND" }, StringSplitOptions.RemoveEmptyEntries);
+                string logicalOperator = "AND";
+                string[] subConditions = parts[0].Split(new string[] { "==", ">", "<", "<>", ">=", "<=" }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (int.TryParse(subConditions[0].Trim(), out int parsedValue))
+                {
+                    // Parsing was successful, and parsedValue contains the integer value
+                    lhs = parsedValue;
+                }
+                else
+                {
+                    int myVarValue = (int)variablesInteger[subConditions[0].Trim()];
+                    lhs = myVarValue;
+                }
+
+                if (int.TryParse(subConditions[1].Trim(), out int parsedValue2))
+                {
+                    // Parsing was successful, and parsedValue contains the integer value
+                    rhs = parsedValue2;
+                }
+                else
+                {
+                    int myVarValue = (int)variablesInteger[subConditions[1].Trim()];
+                    rhs = myVarValue;
+                }
+
+                string[] subConditions2 = parts[1].Split(new string[] { "==", ">", "<", "<>", ">=", "<=" }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (int.TryParse(subConditions2[0].Trim(), out int parsedValue3))
+                {
+                    // Parsing was successful, and parsedValue contains the integer value
+                    lhs2 = parsedValue3;
+                }
+                else
+                {
+                    int myVarValue = (int)variablesInteger[subConditions2[0].Trim()];
+                    lhs2 = myVarValue;
+                }
+
+                if (int.TryParse(subConditions2[1].Trim(), out int parsedValue4))
+                {
+                    // Parsing was successful, and parsedValue contains the integer value
+                    rhs2 = parsedValue4;
+                }
+                else
+                {
+                    int myVarValue = (int)variablesInteger[subConditions2[1].Trim()];
+                    rhs2 = myVarValue;
+                }
+
+                bool value1ToCheck = false;
+
+                bool value2ToCheck = false;
+                //this checks the operand
+                if (parts[0].Contains("==")) { if (lhs == rhs) { value1ToCheck = true; } }
+                else if (parts[0].Contains(">")) { if (lhs > rhs) { value1ToCheck = true; } }
+                else if (parts[0].Contains("<")) { if (lhs < rhs) { value1ToCheck = true; } }
+                else if (parts[0].Contains("<>")) { if (lhs != rhs) { value1ToCheck = true; } }
+                else if (parts[0].Contains(">=")) { if (lhs >= rhs) { value1ToCheck = true; } }
+                else if (parts[0].Contains("<=")) { if (lhs <= rhs) { value1ToCheck = true; } }
+
+                if (parts[1].Contains("==")) { if (lhs2 == rhs2) { value2ToCheck = true; } }
+                else if (parts[1].Contains(">")) { if (lhs2 > rhs2) { value2ToCheck = true; } }
+                else if (parts[1].Contains("<")) { if (lhs2 < rhs2) { value2ToCheck = true; } }
+                else if (parts[1].Contains("<>")) { if (lhs2 != rhs2) { value2ToCheck = true; } }
+                else if (parts[1].Contains(">=")) { if (lhs2 >= rhs2) { value2ToCheck = true; } }
+                else if (parts[1].Contains("<=")) { if (lhs2 <= rhs2) { value2ToCheck = true; } }
+
+                if (value1ToCheck == true || value2ToCheck == true) { return true; } else { return false; }
+            }
+            else
+            {
+                string[] subConditions = conditionExpression.Split(new string[] { "==", ">", "<", "<>", ">=", "<=" }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (int.TryParse(subConditions[0].Trim(), out int parsedValue))
+                {
+                    // Parsing was successful, and parsedValue contains the integer value
+                    lhs = parsedValue;
+                }
+                else
+                {
+                    int myVarValue = (int)variablesInteger[subConditions[0].Trim()];
+                    lhs = myVarValue;
+                }
+
+                if (int.TryParse(subConditions[1].Trim(), out int parsedValue2))
+                {
+                    // Parsing was successful, and parsedValue contains the integer value
+                    rhs = parsedValue2;
+                }
+                else
+                {
+                    int myVarValue = (int)variablesInteger[subConditions[1].Trim()];
+                    rhs = myVarValue;
+                }
+
+                bool value1ToCheck = false;
+
+                //this checks the operand
+                if (conditionExpression.Contains("==")) { if (lhs == rhs) { value1ToCheck = true; } }
+                else if (conditionExpression.Contains(">")) { if (lhs > rhs) { value1ToCheck = true; } }
+                else if (conditionExpression.Contains("<")) { if (lhs < rhs) { value1ToCheck = true; } }
+                else if (conditionExpression.Contains("<>")) { if (lhs != rhs) { value1ToCheck = true; } }
+                else if (conditionExpression.Contains(">=")) { if (lhs >= rhs) { value1ToCheck = true; } }
+                else if (conditionExpression.Contains("<=")) { if (lhs <= rhs) { value1ToCheck = true; } }
+
+          
+                if (value1ToCheck == true) { return true; } else { return false; }
+
+            }
         }
 
 
