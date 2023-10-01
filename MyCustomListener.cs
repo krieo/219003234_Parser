@@ -578,7 +578,18 @@ namespace _219003234_Parser
 
         public override void EnterConditionalStatement([NotNull] RecipeLanguageParser.ConditionalStatementContext context)
         {
-          //  Console.WriteLine("EnterConditionalStatement");
+            //  Console.WriteLine("EnterConditionalStatement");
+           Console.WriteLine(context.GetChild(0).GetText() + "THIS IS CONDITION1");
+            Console.WriteLine(context.GetChild(1).GetText() + "THIS IS CONDITION2");
+            Console.WriteLine(context.GetChild(2).GetText() + "THIS IS CONDITION3");
+            Console.WriteLine(context.GetChild(3).GetText() + "THIS IS CONDITION4");
+            Console.WriteLine(context.GetChild(4).GetText() + "THIS IS CONDITION5");
+            Console.WriteLine(context.GetChild(5).GetText() + "THIS IS CONDITION6");
+            Console.WriteLine(context.GetChild(6).GetText() + "THIS IS CONDITION7");
+
+
+           // EnterSpeakStatement(context.GetChild(4));
+
         }
 
         public override void ExitConditionalStatement([NotNull] RecipeLanguageParser.ConditionalStatementContext context)
