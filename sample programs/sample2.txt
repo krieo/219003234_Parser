@@ -7,7 +7,7 @@ i = 0;
 LOOP WHILE i < 10 DO
 i = i + 1;
 DONE
-IF i > 5 THEN
+IF i > 5 AND i < 20 THEN
 SPEAK("use 1 cup sugar");
 ELSE
 SPEAK("Don’t add sugar");

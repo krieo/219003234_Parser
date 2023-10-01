@@ -17,23 +17,23 @@ namespace _219003234_Parser
 
         public override void EnterProgram([NotNull] RecipeLanguageParser.ProgramContext context)
         {
-            
-           // Console.WriteLine("EnterProgram");
+
+            // Console.WriteLine("EnterProgram");
         }
 
         public override void ExitProgram([NotNull] RecipeLanguageParser.ProgramContext context)
         {
-           // Console.WriteLine("ExitProgram");
+            // Console.WriteLine("ExitProgram");
         }
 
         public override void EnterStatement([NotNull] RecipeLanguageParser.StatementContext context)
         {
-           // Console.WriteLine("EnterStatement");
+            // Console.WriteLine("EnterStatement");
         }
 
         public override void ExitStatement([NotNull] RecipeLanguageParser.StatementContext context)
         {
-           // Console.WriteLine("ExitStatement");
+            // Console.WriteLine("ExitStatement");
         }
 
         //   public override void EnterAskStatement([NotNull] RecipeLanguageParser.AskStatementContext context)
@@ -47,11 +47,11 @@ namespace _219003234_Parser
         /// <param name="context"></param>
         public override void EnterAskStatement([NotNull] RecipeLanguageParser.AskStatementContext context)
         {
-           // Console.WriteLine("EnterAskStatement");
+            // Console.WriteLine("EnterAskStatement");
             string variableName = context.ID().GetText(); // Get the variable name
 
             // Prompt the user for input
-           // Console.Write($"Enter a value for '{variableName}': ");
+            // Console.Write($"Enter a value for '{variableName}': ");
 
             // Read the user's input
             string userInput = Console.ReadLine();
@@ -93,17 +93,17 @@ namespace _219003234_Parser
 
         public override void ExitAskStatement([NotNull] RecipeLanguageParser.AskStatementContext context)
         {
-           // Console.WriteLine("ExitAskStatement");
+            // Console.WriteLine("ExitAskStatement");
         }
 
         public override void EnterDeclaration([NotNull] RecipeLanguageParser.DeclarationContext context)
         {
-           // Console.WriteLine("EnterDeclaration");
+            // Console.WriteLine("EnterDeclaration");
         }
 
         public override void ExitDeclaration([NotNull] RecipeLanguageParser.DeclarationContext context)
         {
-           // Console.WriteLine("ExitDeclaration");
+            // Console.WriteLine("ExitDeclaration");
         }
 
         /// <summary>
@@ -112,18 +112,18 @@ namespace _219003234_Parser
         /// <param name="context"></param>
         public override void EnterIngredientDeclaration([NotNull] RecipeLanguageParser.IngredientDeclarationContext context)
         {
-          //  Console.WriteLine("EnterIngredientDeclaration");
+            //  Console.WriteLine("EnterIngredientDeclaration");
 
             //This is used to store integer variables in a list
             if (context.INTEGER() != null)
             {
-               // Console.WriteLine(context.INTEGER().GetText() + " THIS IS THE INTEGER ===========================================");
-              //  Console.WriteLine(context.ID().GetText() + " THIS IS THE id ===========================================");
+                // Console.WriteLine(context.INTEGER().GetText() + " THIS IS THE INTEGER ===========================================");
+                //  Console.WriteLine(context.ID().GetText() + " THIS IS THE id ===========================================");
                 //This checks if the variable is in the dictionary if its not it adds the entry if it is it shows an error
                 if (!variablesInteger.ContainsKey(context.ID().GetText()))
                 {
                     variablesInteger.Add(context.ID().GetText(), 0);
-                   // Console.WriteLine($"Variable '{context.ID().GetText()}' added with value: {0}");
+                    // Console.WriteLine($"Variable '{context.ID().GetText()}' added with value: {0}");
                 }
                 else
                 {
@@ -135,13 +135,13 @@ namespace _219003234_Parser
             //This is used to store string variables in a list
             if (context.STRING() != null)
             {
-               // Console.WriteLine(context.STRING().GetText() + " THIS IS THE STRING ===========================================");
-               // Console.WriteLine(context.ID().GetText() + " THIS IS THE id ===========================================");
+                // Console.WriteLine(context.STRING().GetText() + " THIS IS THE STRING ===========================================");
+                // Console.WriteLine(context.ID().GetText() + " THIS IS THE id ===========================================");
                 //This checks if the variable is in the dictionary if its not it adds the entry if it is it shows an error
                 if (!variablesString.ContainsKey(context.ID().GetText()))
                 {
                     variablesString.Add(context.ID().GetText(), "empty variable");
-                   // Console.WriteLine($"Variable '{context.ID().GetText()}' added with value: {"empty variable"}");
+                    // Console.WriteLine($"Variable '{context.ID().GetText()}' added with value: {"empty variable"}");
                 }
                 else
                 {
@@ -155,13 +155,13 @@ namespace _219003234_Parser
             //This is used to store FLOAT variables in a list
             if (context.FLOAT() != null)
             {
-              //  Console.WriteLine(context.FLOAT().GetText() + " THIS IS THE FLOAT ===========================================");
-             //   Console.WriteLine(context.ID().GetText() + " THIS IS THE id ===========================================");
+                //  Console.WriteLine(context.FLOAT().GetText() + " THIS IS THE FLOAT ===========================================");
+                //   Console.WriteLine(context.ID().GetText() + " THIS IS THE id ===========================================");
                 //This checks if the variable is in the dictionary if its not it adds the entry if it is it shows an error
                 if (!variablesFloat.ContainsKey(context.ID().GetText()))
                 {
                     variablesFloat.Add(context.ID().GetText(), 0.0);
-              //      Console.WriteLine($"Variable '{context.ID().GetText()}' added with value: {0.0}");
+                    //      Console.WriteLine($"Variable '{context.ID().GetText()}' added with value: {0.0}");
                 }
                 else
                 {
@@ -175,17 +175,17 @@ namespace _219003234_Parser
 
         public override void ExitIngredientDeclaration([NotNull] RecipeLanguageParser.IngredientDeclarationContext context)
         {
-          //  Console.WriteLine("ExitIngredientDeclaration");
+            //  Console.WriteLine("ExitIngredientDeclaration");
         }
 
         public override void EnterArrayDeclaration([NotNull] RecipeLanguageParser.ArrayDeclarationContext context)
         {
-          //  Console.WriteLine("EnterArrayDeclaration");
+            //  Console.WriteLine("EnterArrayDeclaration");
         }
 
         public override void ExitArrayDeclaration([NotNull] RecipeLanguageParser.ArrayDeclarationContext context)
         {
-          //  Console.WriteLine("ExitArrayDeclaration");
+            //  Console.WriteLine("ExitArrayDeclaration");
         }
 
         /// <summary>
@@ -194,26 +194,26 @@ namespace _219003234_Parser
         /// <param name="context"></param>
         public override void EnterSpeakStatement([NotNull] RecipeLanguageParser.SpeakStatementContext context)
         {
-           // Console.WriteLine("EnterSpeakStatement");
+            // Console.WriteLine("EnterSpeakStatement");
 
-            if (context.ID() != null) 
+            if (context.ID() != null)
             {
-               // Console.WriteLine(context.ID().GetText() + "THIS IS THE SPEAK STATEMENT ====================");
+                // Console.WriteLine(context.ID().GetText() + "THIS IS THE SPEAK STATEMENT ====================");
                 string valueToPrint = context.ID().GetText();
 
                 //this checks if the variable is in the list and prints the message to the screen
                 if (variablesString.ContainsKey(valueToPrint))
                 {
                     Console.WriteLine(variablesString[valueToPrint]);
-                  
+
                 }
                 else if (variablesInteger.ContainsKey(valueToPrint))
                 {
-                    Console.WriteLine(variablesInteger[valueToPrint] );
+                    Console.WriteLine(variablesInteger[valueToPrint]);
                 }
                 else if (variablesFloat.ContainsKey(valueToPrint))
                 {
-                    Console.WriteLine(variablesFloat[valueToPrint] );
+                    Console.WriteLine(variablesFloat[valueToPrint]);
                 }
                 else
                 {
@@ -230,14 +230,14 @@ namespace _219003234_Parser
 
         public override void ExitSpeakStatement([NotNull] RecipeLanguageParser.SpeakStatementContext context)
         {
-          //  Console.WriteLine("ExitSpeakStatement");
+            //  Console.WriteLine("ExitSpeakStatement");
         }
 
         public override void EnterShareStatement([NotNull] RecipeLanguageParser.ShareStatementContext context)
         {
             // Console.WriteLine("EnterShareStatement");
             int childIndex = 0;
-        
+
             while (true)
             {
                 var child = context.GetChild(childIndex);
@@ -251,9 +251,9 @@ namespace _219003234_Parser
             }
 
             //this returns the value to the screen
-            if (context.INTEGERLIT() != null) 
+            if (context.INTEGERLIT() != null)
             {
-                Console.WriteLine("Returned "+context.INTEGERLIT().GetText());
+                Console.WriteLine("Returned " + context.INTEGERLIT().GetText());
             }
             else if (context.STRINGLIT() != null)
             {
@@ -271,29 +271,29 @@ namespace _219003234_Parser
             {
                 Console.WriteLine("Returned " + context.BOOLLITTRUE().GetText());
             }
-        
+
 
         }
 
         public override void ExitShareStatement([NotNull] RecipeLanguageParser.ShareStatementContext context)
         {
-           // Console.WriteLine("ExitShareStatement");
+            // Console.WriteLine("ExitShareStatement");
         }
 
         public override void EnterAssignment([NotNull] RecipeLanguageParser.AssignmentContext context)
         {
-          //  Console.WriteLine("EnterAssignment");
+            //  Console.WriteLine("EnterAssignment");
             string assignmentStatement = context.GetText(); // Get the entire assignment statement
-          //  Console.WriteLine(assignmentStatement + " this is the assignement statement knadjfhiusfhieuwfnjksefhkfweewfwe");
-            // Split the assignment statement by the '=' operator
+                                                            //  Console.WriteLine(assignmentStatement + " this is the assignement statement knadjfhiusfhieuwfnjksefhkfweewfwe");
+                                                            // Split the assignment statement by the '=' operator
             string[] assignmentParts = assignmentStatement.Split('=');
 
             if (assignmentParts.Length == 2)
             {
                 string lhs = assignmentParts[0].Trim(); // Left-hand side (variable name)
                 string rhs = assignmentParts[1].Trim(); // Right-hand side (expression)
-              //  Console.WriteLine(lhs + " this is the lhs statement knadjfhiusfhieuwfnjksefhkfweewfwe");
-              //  Console.WriteLine(rhs + " this is the rhs statement knadjfhiusfhieuwfnjksefhkfweewfwe");
+                                                        //  Console.WriteLine(lhs + " this is the lhs statement knadjfhiusfhieuwfnjksefhkfweewfwe");
+                                                        //  Console.WriteLine(rhs + " this is the rhs statement knadjfhiusfhieuwfnjksefhkfweewfwe");
 
                 // Check which dictionary the LHS variable is in
                 if (variablesString.ContainsKey(lhs))
@@ -302,21 +302,21 @@ namespace _219003234_Parser
                     // variablesString[lhs] = PerformStringConcatenation(rhs);
                     string[] terms = rhs.Split('+');
                     string result = "";
-                    foreach (var item in terms) 
+                    foreach (var item in terms)
                     {
                         if (variablesString.ContainsKey(item))
                         {
                             result += (string)variablesString[item];
                         }
                         else
-                        { 
-                        result+= item;
+                        {
+                            result += item;
                         }
                     }
                     // Update the value of the LHS variable in the variablesString dictionary
                     variablesString[lhs] = result;
 
-                  //  Console.WriteLine(result + " THIS IS WHAT WE HAVE OUT RESUTL AS");
+                    //  Console.WriteLine(result + " THIS IS WHAT WE HAVE OUT RESUTL AS");
                 }
                 //This sorts the integer parts of the assignment
                 else if (variablesInteger.ContainsKey(lhs))
@@ -343,7 +343,7 @@ namespace _219003234_Parser
                             string token = child.GetText();
                             if (variablesInteger.ContainsKey(token))
                             {
-                               string integerVariable = variablesInteger[token].ToString();
+                                string integerVariable = variablesInteger[token].ToString();
                                 token = integerVariable;
                             }
                             if (int.TryParse(token, out int intValue))
@@ -407,7 +407,7 @@ namespace _219003234_Parser
                     result = evalStack.Pop();
                     variablesInteger[lhs] = result;
 
-                  //  Console.WriteLine("Result of expression: " + result);
+                    //  Console.WriteLine("Result of expression: " + result);
                 }
 
                 //This performs the assignment for the float variables
@@ -512,7 +512,7 @@ namespace _219003234_Parser
                 Console.WriteLine($"Error: Invalid assignment statement: {assignmentStatement}");
             }
 
-          //  Console.WriteLine("ExitAssignment");
+            //  Console.WriteLine("ExitAssignment");
         }
 
         // Function to get operator precedence
@@ -532,38 +532,38 @@ namespace _219003234_Parser
         }
         public override void ExitAssignment([NotNull] RecipeLanguageParser.AssignmentContext context)
         {
-         //   Console.WriteLine("ExitAssignment");
+            //   Console.WriteLine("ExitAssignment");
 
         }
 
         public override void EnterRecipeStatement([NotNull] RecipeLanguageParser.RecipeStatementContext context)
         {
-          //  Console.WriteLine("EnterRecipeStatement");
+            //  Console.WriteLine("EnterRecipeStatement");
         }
 
         public override void ExitRecipeStatement([NotNull] RecipeLanguageParser.RecipeStatementContext context)
         {
-          //  Console.WriteLine("ExitRecipeStatement");
+            //  Console.WriteLine("ExitRecipeStatement");
         }
 
         public override void EnterMethodStatement([NotNull] RecipeLanguageParser.MethodStatementContext context)
         {
-        //    Console.WriteLine("EnterMethodStatement");
+            //    Console.WriteLine("EnterMethodStatement");
         }
 
         public override void ExitMethodStatement([NotNull] RecipeLanguageParser.MethodStatementContext context)
         {
-          //  Console.WriteLine("ExitMethodStatement");
+            //  Console.WriteLine("ExitMethodStatement");
         }
 
         public override void EnterFunctionCall([NotNull] RecipeLanguageParser.FunctionCallContext context)
         {
-          //  Console.WriteLine("EnterFunctionCall");
+            //  Console.WriteLine("EnterFunctionCall");
         }
 
         public override void ExitFunctionCall([NotNull] RecipeLanguageParser.FunctionCallContext context)
         {
-          //  Console.WriteLine("ExitFunctionCall");
+            //  Console.WriteLine("ExitFunctionCall");
         }
 
         public override void EnterLoopStatement([NotNull] RecipeLanguageParser.LoopStatementContext context)
@@ -632,45 +632,145 @@ namespace _219003234_Parser
 
                 // Update the variable value if necessary
                 variablesInteger[intVariable] = value;
-                Console.WriteLine(value + " THIS IS THE VALUE");
+                //   Console.WriteLine(value + " THIS IS THE VALUE");
             }
         }
 
 
         public override void ExitLoopStatement([NotNull] RecipeLanguageParser.LoopStatementContext context)
         {
-         //   Console.WriteLine("ExitLoopStatement");
+            //   Console.WriteLine("ExitLoopStatement");
         }
 
         public override void EnterConditionalStatement([NotNull] RecipeLanguageParser.ConditionalStatementContext context)
         {
             //  Console.WriteLine("EnterConditionalStatement");
-           Console.WriteLine(context.GetChild(0).GetText() + "THIS IS CONDITION1");
-            Console.WriteLine(context.GetChild(1).GetText() + "THIS IS CONDITION2");
-            Console.WriteLine(context.GetChild(2).GetText() + "THIS IS CONDITION3");
-            Console.WriteLine(context.GetChild(3).GetText() + "THIS IS CONDITION4");
-         //   Console.WriteLine(context.GetChild(4).GetText() + "THIS IS CONDITION5");
-         //   Console.WriteLine(context.GetChild(5).GetText() + "THIS IS CONDITION6");
-         //   Console.WriteLine(context.GetChild(6).GetText() + "THIS IS CONDITION7");
+            // Get the condition expression as text
+            string conditionExpression = context.condition().GetText();
+            Console.WriteLine(conditionExpression + " THIS IS THE EXPRESSION");
+            // Evaluate the condition expression
+            bool conditionResult = EvaluateCondition(conditionExpression);
 
-
-           // EnterSpeakStatement(context.GetChild(4));
+            if (conditionResult)
+            {
+                // The condition is true, execute the IF block
+                EnterStatement(context.statement(0));
+            }
+            else if (context.statement().Length > 1)
+            {
+                // The ELSE block is present and the condition is false, execute the ELSE block
+                EnterStatement(context.statement(1));
+            }
 
         }
 
+
+
+        // Helper method to evaluate a condition expression
+        public bool EvaluateCondition(string conditionExpression)
+        {
+            int lhs = 0;
+            string op = "";
+            int rhs = 0;
+            int lhs2 = 0;
+            string op2 = "";
+            int rhs2 = 0;
+
+            if (conditionExpression.Contains("AND"))
+            {
+                string[] parts = conditionExpression.Split(new string[] { "AND" }, StringSplitOptions.RemoveEmptyEntries);
+                string logicalOperator = "AND";
+                string[] subConditions = parts[0].Split(new string[] { "==", ">", "<", "<>", ">=", "<=" }, StringSplitOptions.RemoveEmptyEntries);
+                
+      
+                        // Declare a variable and assign a value
+                        // variables["myVar"] = 42;
+
+                // Access the variable
+                //int myVarValue = (int)variables["myVar"];
+
+                if (int.TryParse(subConditions[0].Trim(), out int parsedValue))
+                {
+                    // Parsing was successful, and parsedValue contains the integer value
+                    lhs = parsedValue;
+                }
+                else 
+                {
+                    int myVarValue = (int)variablesInteger[subConditions[0].Trim()];
+                    lhs = myVarValue;
+                }
+
+                if (int.TryParse(subConditions[1].Trim(), out int parsedValue2))
+                {
+                    // Parsing was successful, and parsedValue contains the integer value
+                    rhs = parsedValue2;
+                }else
+                {
+                    int myVarValue = (int)variablesInteger[subConditions[1].Trim()];
+                    rhs = myVarValue;
+                }
+
+                string[] subConditions2 = parts[1].Split(new string[] { "==", ">", "<", "<>", ">=", "<=" }, StringSplitOptions.RemoveEmptyEntries);
+            
+                if (int.TryParse(subConditions2[0].Trim(), out int parsedValue3))
+                {
+                    // Parsing was successful, and parsedValue contains the integer value
+                    lhs2 = parsedValue3;
+                }
+                else
+                {
+                    int myVarValue = (int)variablesInteger[subConditions2[0].Trim()];
+                    lhs2 = myVarValue;
+                }
+
+                if (int.TryParse(subConditions2[1].Trim(), out int parsedValue4))
+                {
+                    // Parsing was successful, and parsedValue contains the integer value
+                    rhs2 = parsedValue4;
+                }
+                else
+                {
+                    int myVarValue = (int)variablesInteger[subConditions2[1].Trim()];
+                    rhs2 = myVarValue;
+                }
+
+                bool value1ToCheck = false;
+
+                bool value2ToCheck = false;
+                //this checks the operand
+                if (parts[0].Contains("==")){if (lhs == rhs){value1ToCheck = true;}}
+                else if (parts[0].Contains(">")){if (lhs > rhs) { value1ToCheck = true; }}
+                else if (parts[0].Contains("<")) { if (lhs < rhs) { value1ToCheck = true; } }
+                else if (parts[0].Contains("<>")) { if (lhs != rhs) { value1ToCheck = true; } }
+                else if (parts[0].Contains(">=")) { if (lhs >= rhs) { value1ToCheck = true; } }
+                else if (parts[0].Contains("<=")) { if (lhs <= rhs) { value1ToCheck = true; } }
+
+                if (parts[1].Contains("==")) { if (lhs2 == rhs2) { value2ToCheck = true; } }
+                else if (parts[1].Contains(">")) { if (lhs2 > rhs2) { value2ToCheck = true; } }
+                else if (parts[1].Contains("<")) { if (lhs2 < rhs2) { value2ToCheck = true; } }
+                else if (parts[1].Contains("<>")) { if (lhs2 != rhs2) { value2ToCheck = true; } }
+                else if (parts[1].Contains(">=")) { if (lhs2 >= rhs2) { value2ToCheck = true; } }
+                else if (parts[1].Contains("<=")) { if (lhs2 <= rhs2) { value2ToCheck = true; } }
+
+                if (value1ToCheck == value2ToCheck) { return true; } else { return false; }
+            }
+            return true;
+        }
+
+
         public override void ExitConditionalStatement([NotNull] RecipeLanguageParser.ConditionalStatementContext context)
         {
-         //   Console.WriteLine("ExitConditionalStatement");
+            //   Console.WriteLine("ExitConditionalStatement");
         }
 
         public override void EnterCondition([NotNull] RecipeLanguageParser.ConditionContext context)
         {
-          //  Console.WriteLine("EnterCondition");
+            //  Console.WriteLine("EnterCondition");
         }
 
         public override void ExitCondition([NotNull] RecipeLanguageParser.ConditionContext context)
         {
-          //  Console.WriteLine("ExitCondition");
+            //  Console.WriteLine("ExitCondition");
         }
     }
 }
