@@ -568,7 +568,51 @@ namespace _219003234_Parser
 
         public override void EnterLoopStatement([NotNull] RecipeLanguageParser.LoopStatementContext context)
         {
-         //   Console.WriteLine("EnterLoopStatement");
+            //   Console.WriteLine("EnterLoopStatement");
+            int childIndex = 0;
+            int value = 0;
+            string op = ">";
+            int endValue = 0;
+            string intVariable = "";
+            while (true)
+            {
+                var child = context.GetChild(childIndex);
+                if (child == null)
+                {
+                    break; // No more children, exit the loop
+                }
+            
+                if (variablesInteger.ContainsKey(child.GetText()))
+                {
+                    value = (int)variablesInteger[child.GetText()];
+                    intVariable = child.GetText();
+                }
+                if (child.GetText() == ">") 
+                { op = ">";
+                    string endValueStr = context.GetChild(childIndex + 1).GetText();
+                    if (int.TryParse(endValueStr, out endValue)){}
+                }
+                if (child.GetText() == "<") { op = "<"; string endValueStr = context.GetChild(childIndex + 1).GetText();
+                    if (int.TryParse(endValueStr, out endValue)) { }
+                }
+                if (child.GetText() == "==") { op = "=="; string endValueStr = context.GetChild(childIndex + 1).GetText();
+                    if (int.TryParse(endValueStr, out endValue)) { }
+                }
+                if (child.GetText() == "<>") { op = "<>"; string endValueStr = context.GetChild(childIndex + 1).GetText();
+                    if (int.TryParse(endValueStr, out endValue)) { }
+                }
+
+                childIndex++;
+            }
+            if (op == ">") { while (value > endValue) { value = value - 1; } }
+            else if (op == "<") { while (value < endValue) { value = value + 1; } }
+            else if (op == "==") { while (value == endValue) { value += 1; } }
+            else if (op=="<>") { while (value != endValue) { value += 1; } }
+            if (variablesInteger.ContainsKey(intVariable))
+            {
+              variablesInteger[intVariable] = value;
+            }
+       
         }
 
         public override void ExitLoopStatement([NotNull] RecipeLanguageParser.LoopStatementContext context)
@@ -583,9 +627,9 @@ namespace _219003234_Parser
             Console.WriteLine(context.GetChild(1).GetText() + "THIS IS CONDITION2");
             Console.WriteLine(context.GetChild(2).GetText() + "THIS IS CONDITION3");
             Console.WriteLine(context.GetChild(3).GetText() + "THIS IS CONDITION4");
-            Console.WriteLine(context.GetChild(4).GetText() + "THIS IS CONDITION5");
-            Console.WriteLine(context.GetChild(5).GetText() + "THIS IS CONDITION6");
-            Console.WriteLine(context.GetChild(6).GetText() + "THIS IS CONDITION7");
+         //   Console.WriteLine(context.GetChild(4).GetText() + "THIS IS CONDITION5");
+         //   Console.WriteLine(context.GetChild(5).GetText() + "THIS IS CONDITION6");
+         //   Console.WriteLine(context.GetChild(6).GetText() + "THIS IS CONDITION7");
 
 
            // EnterSpeakStatement(context.GetChild(4));
