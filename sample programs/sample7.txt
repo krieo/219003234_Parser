@@ -7,7 +7,7 @@ X = TRUE;
 INGREDIENT Y AS BOOL;
 Y = TRUE;
 IF X == Y THEN
-SPEAK("use 1 cup sugar");
+SPEAK("X Does Equal Y so you should use 2 cups of flour");
 ELSE
 SPEAK("Don’t add sugar");
 DONE

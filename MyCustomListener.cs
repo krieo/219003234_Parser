@@ -14,7 +14,9 @@ namespace _219003234_Parser
         Dictionary<string, object> variablesString = new Dictionary<string, object>();
         Dictionary<string, object> variablesInteger = new Dictionary<string, object>();
         Dictionary<string, object> variablesFloat = new Dictionary<string, object>();
-
+        private bool conditional1 = false;
+        private bool conditional2 = false;
+        private List<string> statements = new List<string>();
         public override void EnterProgram([NotNull] RecipeLanguageParser.ProgramContext context)
         {
 
@@ -214,7 +216,7 @@ namespace _219003234_Parser
         public override void EnterSpeakStatement([NotNull] RecipeLanguageParser.SpeakStatementContext context)
         {
             // Console.WriteLine("EnterSpeakStatement");
-
+          
             if (context.ID() != null)
             {
                 // Console.WriteLine(context.ID().GetText() + "THIS IS THE SPEAK STATEMENT ====================");
@@ -260,12 +262,32 @@ namespace _219003234_Parser
                 }
                 else
                 {
-                    valueToPrint = valueToPrint.Replace("SPEAK", "").Replace("(", "").Replace(")", "").Replace(";", "").Replace("\"", "");
+      //              Console.WriteLine(context.Parent.GetText() + "THIS IS TEHE STRNG");
 
-                    // Trim any remaining whitespace
-                    valueToPrint = valueToPrint.Trim();
+        //            Console.WriteLine(context.GetText() + "THIS IS THEE STRNGSSS");
+        //      Console.WriteLine(context.Parent.Parent.Parent.GetText() + " herkmicdnsusebfwjefveywevfyewvfy");
+                    if (context.Parent.Parent.Parent.GetText().Contains("IF") && context.Parent.Parent.Parent.GetText().Contains("THEN")) 
+                    {
+                      
+                  //      Console.WriteLine("IT DOES CONTIAN THE IF THEN ------------------------------------------");
+                  //      foreach (var i in statements) 
+                //        {
+                 //           Console.WriteLine("THESE ARE WHAT IS IN THE STATEMENTS ARRAY:" + i);
+                        
+                    //    }
+                        if (statements.Contains(context.GetText())) 
+                        {
+                          // Console.WriteLine("YES WE FOUND IT ------------------------------------------");
+                            valueToPrint = valueToPrint.Replace("SPEAK", "").Replace("(", "").Replace(")", "").Replace(";", "").Replace("\"", "");
 
-                    Console.WriteLine(valueToPrint);
+                            // Trim any remaining whitespace
+                            valueToPrint = valueToPrint.Trim();
+
+                            Console.WriteLine(valueToPrint);
+                            statements.Remove(context.GetText());
+                        }
+                    }
+              
                 }
 
             }
@@ -697,7 +719,7 @@ namespace _219003234_Parser
             //  Console.WriteLine("EnterConditionalStatement");
             // Get the condition expression as text
             string conditionExpression = context.condition().GetText();
-            Console.WriteLine(conditionExpression + " THIS IS THE EXPRESSION");
+         //   Console.WriteLine(conditionExpression + " THIS IS THE EXPRESSION");
             // Evaluate the condition expression
             bool conditionResult = EvaluateCondition(conditionExpression);
 
@@ -705,15 +727,17 @@ namespace _219003234_Parser
             {
                 // The condition is true, execute the IF block
                 
-                Console.WriteLine(context.statement(0).GetText() + " THIS IS IN THE CONTECT BOLOW");
+           //     Console.WriteLine(context.statement(0).GetText() + " THIS IS IN THE CONTECT BOLOW");
+                statements.Add(context.statement(0).GetText());
                 EnterSpeakStatement(context.statement(0).speakStatement());
-               Console.WriteLine(context.condition().GetText() + "THIS IS THE CONDIITON JKNDKJB");
+          //     Console.WriteLine(context.condition().GetText() + "THIS IS THE CONDIITON JKNDKJB");
             }
             else if (context.statement().Length > 1)
             {
                 // The ELSE block is present and the condition is false, execute the ELSE block
                 EnterSpeakStatement(context.statement(1).speakStatement());
-                Console.WriteLine(context.statement(1).GetText() + " THIS IS IN THE CONTECT BOLOW");
+                statements.Add(context.statement(1).GetText());
+           //     Console.WriteLine(context.statement(1).GetText() + " THIS IS IN THE CONTECT BOLOW");
             }
 
         }
