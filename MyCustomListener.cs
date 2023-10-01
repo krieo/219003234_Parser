@@ -568,12 +568,12 @@ namespace _219003234_Parser
 
         public override void EnterLoopStatement([NotNull] RecipeLanguageParser.LoopStatementContext context)
         {
-            //   Console.WriteLine("EnterLoopStatement");
             int childIndex = 0;
-            int value = 0;
-            string op = ">";
-            int endValue = 0;
             string intVariable = "";
+            string op = "";
+            int endValue = 0;
+
+            // Step 1: Parse the loop condition and extract relevant values
             while (true)
             {
                 var child = context.GetChild(childIndex);
@@ -581,39 +581,61 @@ namespace _219003234_Parser
                 {
                     break; // No more children, exit the loop
                 }
-            
-                if (variablesInteger.ContainsKey(child.GetText()))
+
+                string childText = child.GetText();
+
+                if (variablesInteger.ContainsKey(childText))
                 {
-                    value = (int)variablesInteger[child.GetText()];
-                    intVariable = child.GetText();
+                    intVariable = childText;
                 }
-                if (child.GetText() == ">") 
-                { op = ">";
+                else if (childText == ">" || childText == "<" || childText == "==" || childText == "<>")
+                {
+                    op = childText;
                     string endValueStr = context.GetChild(childIndex + 1).GetText();
-                    if (int.TryParse(endValueStr, out endValue)){}
-                }
-                if (child.GetText() == "<") { op = "<"; string endValueStr = context.GetChild(childIndex + 1).GetText();
-                    if (int.TryParse(endValueStr, out endValue)) { }
-                }
-                if (child.GetText() == "==") { op = "=="; string endValueStr = context.GetChild(childIndex + 1).GetText();
-                    if (int.TryParse(endValueStr, out endValue)) { }
-                }
-                if (child.GetText() == "<>") { op = "<>"; string endValueStr = context.GetChild(childIndex + 1).GetText();
-                    if (int.TryParse(endValueStr, out endValue)) { }
+                    if (int.TryParse(endValueStr, out endValue))
+                    {
+                        break; // Exit the loop after parsing the condition
+                    }
                 }
 
                 childIndex++;
             }
-            if (op == ">") { while (value > endValue) { value = value - 1; } }
-            else if (op == "<") { while (value < endValue) { value = value + 1; } }
-            else if (op == "==") { while (value == endValue) { value += 1; } }
-            else if (op=="<>") { while (value != endValue) { value += 1; } }
-            if (variablesInteger.ContainsKey(intVariable))
+
+            // Step 2: Execute the loop based on the condition
+            int value = (int)variablesInteger[intVariable];
+            while (true)
             {
-              variablesInteger[intVariable] = value;
+                if (op == ">" && value > endValue)
+                {
+                    // Your loop body here (e.g., i = i - 1;)
+                    value = value - 1;
+                }
+                else if (op == "<" && value < endValue)
+                {
+                    // Your loop body here (e.g., i = i + 1;)
+                    value = value + 1;
+                }
+                else if (op == "==" && value == endValue)
+                {
+                    // Your loop body here (e.g., i = i + 1;)
+                    value = value + 1;
+                }
+                else if (op == "<>" && value != endValue)
+                {
+                    // Your loop body here (e.g., i = i + 1;)
+                    value = value + 1;
+                }
+                else
+                {
+                    break; // Exit the loop when the condition is no longer met
+                }
+
+                // Update the variable value if necessary
+                variablesInteger[intVariable] = value;
+                Console.WriteLine(value + " THIS IS THE VALUE");
             }
-       
         }
+
 
         public override void ExitLoopStatement([NotNull] RecipeLanguageParser.LoopStatementContext context)
         {
