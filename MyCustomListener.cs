@@ -170,6 +170,24 @@ namespace _219003234_Parser
 
             }
 
+            //This is used to store integer variables in a list
+            if (context.BOOL() != null)
+            {
+                // Console.WriteLine(context.INTEGER().GetText() + " THIS IS THE INTEGER ===========================================");
+                //  Console.WriteLine(context.ID().GetText() + " THIS IS THE id ===========================================");
+                //This checks if the variable is in the dictionary if its not it adds the entry if it is it shows an error
+                if (!variablesInteger.ContainsKey(context.ID().GetText()))
+                {
+                    variablesInteger.Add(context.ID().GetText(), 0);
+                    // Console.WriteLine($"Variable '{context.ID().GetText()}' added with value: {0}");
+                }
+                else
+                {
+                    Console.WriteLine($"Error: Variable '{context.ID().GetText()}' already exists.");
+                }
+
+            }
+
 
         }
 
@@ -341,6 +359,8 @@ namespace _219003234_Parser
                         else
                         {
                             string token = child.GetText();
+                            if (token == "TRUE") { token = "1"; }
+                            if (token == "FALSE") { token = "0"; }
                             if (variablesInteger.ContainsKey(token))
                             {
                                 string integerVariable = variablesInteger[token].ToString();

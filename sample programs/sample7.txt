@@ -2,11 +2,11 @@ RECIPE BooleanShow
 DO
 METHOD Main() AS INTEGER
 DO
-INGREDIENT x AS BOOL;
-x = TRUE;
+INGREDIENT X AS BOOL;
+X = TRUE;
 INGREDIENT Y AS BOOL;
 Y = TRUE;
-IF x == Y THEN
+IF X == Y THEN
 SPEAK("use 1 cup sugar");
 ELSE
 SPEAK("Don’t add sugar");
