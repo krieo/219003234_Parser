@@ -5,12 +5,12 @@ DO
 INGREDIENT i AS INTEGER;
 i = 0;
 LOOP WHILE i < 10 DO
-IF i > 1 AND i < 10 THEN
+i = i + 1;
+DONE
+IF i > 5 THEN
 SPEAK("use 1 cup sugar");
 ELSE
 SPEAK("Don’t add sugar");
-DONE
-i = i + 1;
 DONE
 SHARE 0;
 DONE
