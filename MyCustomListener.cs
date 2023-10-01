@@ -28,8 +28,9 @@ namespace _219003234_Parser
 
         public override void EnterStatement([NotNull] RecipeLanguageParser.StatementContext context)
         {
-            // Console.WriteLine("EnterStatement");
+           
         }
+
 
         public override void ExitStatement([NotNull] RecipeLanguageParser.StatementContext context)
         {
@@ -238,7 +239,36 @@ namespace _219003234_Parser
                     Console.WriteLine($"Variable '{valueToPrint}' not found.");
                 }
             }
+            else 
+            {
+                // Console.WriteLine(context.ID().GetText() + "THIS IS THE SPEAK STATEMENT ====================");
+                string valueToPrint = context.GetText();
 
+                //this checks if the variable is in the list and prints the message to the screen
+                if (variablesString.ContainsKey(valueToPrint))
+                {
+                    Console.WriteLine(variablesString[valueToPrint]);
+
+                }
+                else if (variablesInteger.ContainsKey(valueToPrint))
+                {
+                    Console.WriteLine(variablesInteger[valueToPrint]);
+                }
+                else if (variablesFloat.ContainsKey(valueToPrint))
+                {
+                    Console.WriteLine(variablesFloat[valueToPrint]);
+                }
+                else
+                {
+                    valueToPrint = valueToPrint.Replace("SPEAK", "").Replace("(", "").Replace(")", "").Replace(";", "").Replace("\"", "");
+
+                    // Trim any remaining whitespace
+                    valueToPrint = valueToPrint.Trim();
+
+                    Console.WriteLine(valueToPrint);
+                }
+
+            }
             // Declare a variable and assign a value
             // variables["myVar"] = 42;
 
@@ -674,12 +704,16 @@ namespace _219003234_Parser
             if (conditionResult)
             {
                 // The condition is true, execute the IF block
-                EnterStatement(context.statement(0));
+                
+                Console.WriteLine(context.statement(0).GetText() + " THIS IS IN THE CONTECT BOLOW");
+                EnterSpeakStatement(context.statement(0).speakStatement());
+               Console.WriteLine(context.condition().GetText() + "THIS IS THE CONDIITON JKNDKJB");
             }
             else if (context.statement().Length > 1)
             {
                 // The ELSE block is present and the condition is false, execute the ELSE block
-                EnterStatement(context.statement(1));
+                EnterSpeakStatement(context.statement(1).speakStatement());
+                Console.WriteLine(context.statement(1).GetText() + " THIS IS IN THE CONTECT BOLOW");
             }
 
         }
@@ -876,7 +910,7 @@ namespace _219003234_Parser
                 else if (conditionExpression.Contains(">=")) { if (lhs >= rhs) { value1ToCheck = true; } }
                 else if (conditionExpression.Contains("<=")) { if (lhs <= rhs) { value1ToCheck = true; } }
 
-          
+
                 if (value1ToCheck == true) { return true; } else { return false; }
 
             }
