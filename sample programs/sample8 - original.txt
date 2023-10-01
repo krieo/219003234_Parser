@@ -12,8 +12,13 @@ LOOP WHILE i < 2 DO
 i = i + 1;
 DONE
 IF values[i] == "1" THEN
-SPEAK("We should eat some cake");
+@Print("cake");
 DONE
+SHARE 0;
+DONE
+METHOD Print(message AS STRING) AS INTEGER
+DO
+SPEAK(message);
 SHARE 0;
 DONE
 DONE
