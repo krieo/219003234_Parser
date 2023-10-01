@@ -433,6 +433,10 @@ namespace _219003234_Parser
                                 }
                                 operators.Push(token);
                             }
+                            else if (token.Equals("@")) 
+                            {
+                               Console.WriteLine(context.FUNCTION_CALL() + " this is reg fynctioncall");
+                            }
                         }
 
                         childIndex++;
