@@ -235,8 +235,44 @@ namespace _219003234_Parser
 
         public override void EnterShareStatement([NotNull] RecipeLanguageParser.ShareStatementContext context)
         {
-           // Console.WriteLine("EnterShareStatement");
-           Console.WriteLine(context.INTEGERLIT().GetText());
+            // Console.WriteLine("EnterShareStatement");
+            int childIndex = 0;
+        
+            while (true)
+            {
+                var child = context.GetChild(childIndex);
+                if (child == null)
+                {
+                    break; // No more children, exit the loop
+                }
+
+
+                childIndex++;
+            }
+
+            //this returns the value to the screen
+            if (context.INTEGERLIT() != null) 
+            {
+                Console.WriteLine("Returned "+context.INTEGERLIT().GetText());
+            }
+            else if (context.STRINGLIT() != null)
+            {
+                Console.WriteLine("Returned " + context.STRINGLIT().GetText());
+            }
+            else if (context.FLOATLIT() != null)
+            {
+                Console.WriteLine("Returned " + context.FLOATLIT().GetText());
+            }
+            else if (context.BOOLLITFALSE() != null)
+            {
+                Console.WriteLine("Returned " + context.BOOLLITFALSE().GetText());
+            }
+            else if (context.BOOLLITTRUE() != null)
+            {
+                Console.WriteLine("Returned " + context.BOOLLITTRUE().GetText());
+            }
+        
+
         }
 
         public override void ExitShareStatement([NotNull] RecipeLanguageParser.ShareStatementContext context)
