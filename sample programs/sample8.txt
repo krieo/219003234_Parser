@@ -11,8 +11,8 @@ i = 0;
 LOOP WHILE i < 2 DO
 i = i + 1;
 DONE
-IF values[i] == "1" THEN
-SPEAK("We should eat some cake");
+IF values[i] == "3" THEN
+SPEAK("We need to eat some cake");
 DONE
 SHARE 0;
 DONE

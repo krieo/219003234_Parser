@@ -14,6 +14,7 @@ namespace _219003234_Parser
         Dictionary<string, object> variablesString = new Dictionary<string, object>();
         Dictionary<string, object> variablesInteger = new Dictionary<string, object>();
         Dictionary<string, object> variablesFloat = new Dictionary<string, object>();
+        Dictionary<string, object> variablesArray = new Dictionary<string, object>();
         private bool conditional1 = false;
         private bool conditional2 = false;
         private List<string> statements = new List<string>();
@@ -202,6 +203,24 @@ namespace _219003234_Parser
         public override void EnterArrayDeclaration([NotNull] RecipeLanguageParser.ArrayDeclarationContext context)
         {
             //  Console.WriteLine("EnterArrayDeclaration");
+            //This is used to store integer variables in a list
+            context.GetText();
+            if (context.STRING() != null)
+            {
+                // Console.WriteLine(context.INTEGER().GetText() + " THIS IS THE INTEGER ===========================================");
+                //  Console.WriteLine(context.ID().GetText() + " THIS IS THE id ===========================================");
+                //This checks if the variable is in the dictionary if its not it adds the entry if it is it shows an error
+                if (!variablesArray.ContainsKey(context.ID().GetText()))
+                {
+                    variablesArray.Add(context.ID().GetText(), "");
+                    // Console.WriteLine($"Variable '{context.ID().GetText()}' added with value: {0}");
+                }
+                else
+                {
+                    Console.WriteLine($"Error: Variable '{context.ID().GetText()}' already exists.");
+                }
+
+            }
         }
 
         public override void ExitArrayDeclaration([NotNull] RecipeLanguageParser.ArrayDeclarationContext context)
@@ -352,245 +371,275 @@ namespace _219003234_Parser
 
         public override void EnterAssignment([NotNull] RecipeLanguageParser.AssignmentContext context)
         {
-            //  Console.WriteLine("EnterAssignment");
-            string assignmentStatement = context.GetText(); // Get the entire assignment statement
-                                                            //  Console.WriteLine(assignmentStatement + " this is the assignement statement knadjfhiusfhieuwfnjksefhkfweewfwe");
-                                                            // Split the assignment statement by the '=' operator
-            string[] assignmentParts = assignmentStatement.Split('=');
-
-            if (assignmentParts.Length == 2)
+            if (context.GetText().Contains("[")) //an array
             {
-                string lhs = assignmentParts[0].Trim(); // Left-hand side (variable name)
-                string rhs = assignmentParts[1].Trim(); // Right-hand side (expression)
-                                                        //  Console.WriteLine(lhs + " this is the lhs statement knadjfhiusfhieuwfnjksefhkfweewfwe");
-                                                        //  Console.WriteLine(rhs + " this is the rhs statement knadjfhiusfhieuwfnjksefhkfweewfwe");
-
-                // Check which dictionary the LHS variable is in
-                if (variablesString.ContainsKey(lhs))
+                string assignmentStatement = context.GetText(); // Get the entire assignment statement
+                                                                //  Console.WriteLine(assignmentStatement + " this is the assignement statement knadjfhiusfhieuwfnjksefhkfweewfwe");
+                                                                // Split the assignment statement by the '=' operator
+                string[] assignmentParts = assignmentStatement.Split('=');
+                if (assignmentParts.Length == 2)
                 {
-                    // LHS is a string variable, so perform string concatenation
-                    // variablesString[lhs] = PerformStringConcatenation(rhs);
-                    string[] terms = rhs.Split('+');
-                    string result = "";
-                    foreach (var item in terms)
+                    string lhs = assignmentParts[0].Trim(); // Left-hand side (variable name)
+                    string rhs = assignmentParts[1].Trim(); // Right-hand side (expression)
+                    rhs = rhs.Replace(";", "");
+
+                    if (variablesArray.ContainsKey(lhs))
                     {
-                        if (variablesString.ContainsKey(item))
-                        {
-                            result += (string)variablesString[item];
-                        }
-                        else
-                        {
-                            result += item;
-                        }
+                        variablesArray[lhs] = rhs;
                     }
-                    // Update the value of the LHS variable in the variablesString dictionary
-                    variablesString[lhs] = result;
-
-                    //  Console.WriteLine(result + " THIS IS WHAT WE HAVE OUT RESUTL AS");
-                }
-                //This sorts the integer parts of the assignment
-                else if (variablesInteger.ContainsKey(lhs))
-                {
-                    // LHS is an integer variable, so perform integer addition
-
-                    // Use stacks for operator precedence
-                    Stack<string> operators = new Stack<string>();
-                    Queue<string> outputQueue = new Queue<string>();
-
-                    int childIndex = 0;
-                    int result = 0;
-
-                    while (true)
+                    else 
                     {
-                        var child = context.GetChild(childIndex);
+                        variablesArray.Add(lhs, rhs);
+                    }
 
-                        if (child == null)
+                }
+
+                }
+                else //not an array
+            {
+
+
+
+
+                //  Console.WriteLine("EnterAssignment");
+                string assignmentStatement = context.GetText(); // Get the entire assignment statement
+                                                                //  Console.WriteLine(assignmentStatement + " this is the assignement statement knadjfhiusfhieuwfnjksefhkfweewfwe");
+                                                                // Split the assignment statement by the '=' operator
+                string[] assignmentParts = assignmentStatement.Split('=');
+
+                if (assignmentParts.Length == 2)
+                {
+                    string lhs = assignmentParts[0].Trim(); // Left-hand side (variable name)
+                    string rhs = assignmentParts[1].Trim(); // Right-hand side (expression)
+                                                            //  Console.WriteLine(lhs + " this is the lhs statement knadjfhiusfhieuwfnjksefhkfweewfwe");
+                                                            //  Console.WriteLine(rhs + " this is the rhs statement knadjfhiusfhieuwfnjksefhkfweewfwe");
+
+                    // Check which dictionary the LHS variable is in
+                    if (variablesString.ContainsKey(lhs))
+                    {
+                        // LHS is a string variable, so perform string concatenation
+                        // variablesString[lhs] = PerformStringConcatenation(rhs);
+                        string[] terms = rhs.Split('+');
+                        string result = "";
+                        foreach (var item in terms)
                         {
-                            break; // No more children, exit the loop
+                            if (variablesString.ContainsKey(item))
+                            {
+                                result += (string)variablesString[item];
+                            }
+                            else
+                            {
+                                result += item;
+                            }
                         }
-                        else
+                        // Update the value of the LHS variable in the variablesString dictionary
+                        variablesString[lhs] = result;
+
+                        //  Console.WriteLine(result + " THIS IS WHAT WE HAVE OUT RESUTL AS");
+                    }
+                    //This sorts the integer parts of the assignment
+                    else if (variablesInteger.ContainsKey(lhs))
+                    {
+                        // LHS is an integer variable, so perform integer addition
+
+                        // Use stacks for operator precedence
+                        Stack<string> operators = new Stack<string>();
+                        Queue<string> outputQueue = new Queue<string>();
+
+                        int childIndex = 0;
+                        int result = 0;
+
+                        while (true)
                         {
-                            string token = child.GetText();
-                            if (token == "TRUE") { token = "1"; }
-                            if (token == "FALSE") { token = "0"; }
-                            if (variablesInteger.ContainsKey(token))
+                            var child = context.GetChild(childIndex);
+
+                            if (child == null)
                             {
-                                string integerVariable = variablesInteger[token].ToString();
-                                token = integerVariable;
+                                break; // No more children, exit the loop
                             }
-                            if (int.TryParse(token, out int intValue))
+                            else
                             {
-                                // If it's a number, add it to the output queue
-                                outputQueue.Enqueue(intValue.ToString());
-                            }
-                            else if (token == "+" || token == "-" || token == "*" || token == "/")
-                            {
-                                // If it's an operator
-                                while (operators.Count > 0 && GetPrecedence(operators.Peek()) >= GetPrecedence(token))
+                                string token = child.GetText();
+                                if (token == "TRUE") { token = "1"; }
+                                if (token == "FALSE") { token = "0"; }
+                                if (variablesInteger.ContainsKey(token))
                                 {
-                                    // Pop operators with higher or equal precedence and enqueue them
-                                    outputQueue.Enqueue(operators.Pop());
+                                    string integerVariable = variablesInteger[token].ToString();
+                                    token = integerVariable;
                                 }
-                                operators.Push(token);
-                            }
-                            else if (token.Equals("@")) 
-                            {
-                               Console.WriteLine(context.FUNCTION_CALL() + " this is reg fynctioncall");
-                            }
-                        }
-
-                        childIndex++;
-                    }
-
-                    // Enqueue remaining operators to output
-                    while (operators.Count > 0)
-                    {
-                        outputQueue.Enqueue(operators.Pop());
-                    }
-
-                    // Evaluate the RPN expression
-                    Stack<int> evalStack = new Stack<int>();
-
-                    foreach (var item in outputQueue)
-                    {
-                        if (int.TryParse(item, out int intValue))
-                        {
-                            evalStack.Push(intValue);
-                        }
-                        else
-                        {
-                            int b = evalStack.Pop();
-                            int a = evalStack.Pop();
-
-                            switch (item)
-                            {
-                                case "+":
-                                    evalStack.Push(a + b);
-                                    break;
-                                case "-":
-                                    evalStack.Push(a - b);
-                                    break;
-                                case "*":
-                                    evalStack.Push(a * b);
-                                    break;
-                                case "/":
-                                    evalStack.Push(a / b);
-                                    break;
-                            }
-                        }
-                    }
-
-                    result = evalStack.Pop();
-                    variablesInteger[lhs] = result;
-
-                    //  Console.WriteLine("Result of expression: " + result);
-                }
-
-                //This performs the assignment for the float variables
-                else if (variablesFloat.ContainsKey(lhs))
-                {
-                    // LHS is an float variable, so perform float addition
-
-                    // Use stacks for operator precedence
-                    Stack<string> operators = new Stack<string>();
-                    Queue<string> outputQueue = new Queue<string>();
-
-                    int childIndex = 0;
-                    float result = 0;
-
-                    while (true)
-                    {
-                        var child = context.GetChild(childIndex);
-
-                        if (child == null)
-                        {
-                            break; // No more children, exit the loop
-                        }
-                        else
-                        {
-                            string token = child.GetText();
-                            if (variablesFloat.ContainsKey(token))
-                            {
-                                string floatVariable = variablesFloat[token].ToString();
-                                token = floatVariable;
-                            }
-                            if (float.TryParse(token, out float floatValue))
-                            {
-                                // If it's a number, add it to the output queue
-                                outputQueue.Enqueue(floatValue.ToString());
-                            }
-                            else if (token == "+" || token == "-" || token == "*" || token == "/")
-                            {
-                                // If it's an operator
-                                while (operators.Count > 0 && GetPrecedence(operators.Peek()) >= GetPrecedence(token))
+                                if (int.TryParse(token, out int intValue))
                                 {
-                                    // Pop operators with higher or equal precedence and enqueue them
-                                    outputQueue.Enqueue(operators.Pop());
+                                    // If it's a number, add it to the output queue
+                                    outputQueue.Enqueue(intValue.ToString());
                                 }
-                                operators.Push(token);
+                                else if (token == "+" || token == "-" || token == "*" || token == "/")
+                                {
+                                    // If it's an operator
+                                    while (operators.Count > 0 && GetPrecedence(operators.Peek()) >= GetPrecedence(token))
+                                    {
+                                        // Pop operators with higher or equal precedence and enqueue them
+                                        outputQueue.Enqueue(operators.Pop());
+                                    }
+                                    operators.Push(token);
+                                }
+                                else if (token.Equals("@"))
+                                {
+                                    Console.WriteLine(context.FUNCTION_CALL() + " this is reg fynctioncall");
+                                }
                             }
+
+                            childIndex++;
                         }
 
-                        childIndex++;
-                    }
-
-                    // Enqueue remaining operators to output
-                    while (operators.Count > 0)
-                    {
-                        outputQueue.Enqueue(operators.Pop());
-                    }
-
-                    // Evaluate the RPN expression
-                    Stack<float> evalStack = new Stack<float>();
-
-                    foreach (var item in outputQueue)
-                    {
-                        if (float.TryParse(item, out float floatValue))
+                        // Enqueue remaining operators to output
+                        while (operators.Count > 0)
                         {
-                            evalStack.Push(floatValue);
+                            outputQueue.Enqueue(operators.Pop());
                         }
-                        else
-                        {
-                            float b = evalStack.Pop();
-                            float a = evalStack.Pop();
 
-                            switch (item)
+                        // Evaluate the RPN expression
+                        Stack<int> evalStack = new Stack<int>();
+
+                        foreach (var item in outputQueue)
+                        {
+                            if (int.TryParse(item, out int intValue))
                             {
-                                case "+":
-                                    evalStack.Push(a + b);
-                                    break;
-                                case "-":
-                                    evalStack.Push(a - b);
-                                    break;
-                                case "*":
-                                    evalStack.Push(a * b);
-                                    break;
-                                case "/":
-                                    evalStack.Push(a / b);
-                                    break;
+                                evalStack.Push(intValue);
+                            }
+                            else
+                            {
+                                int b = evalStack.Pop();
+                                int a = evalStack.Pop();
+
+                                switch (item)
+                                {
+                                    case "+":
+                                        evalStack.Push(a + b);
+                                        break;
+                                    case "-":
+                                        evalStack.Push(a - b);
+                                        break;
+                                    case "*":
+                                        evalStack.Push(a * b);
+                                        break;
+                                    case "/":
+                                        evalStack.Push(a / b);
+                                        break;
+                                }
                             }
                         }
+
+                        result = evalStack.Pop();
+                        variablesInteger[lhs] = result;
+
+                        //  Console.WriteLine("Result of expression: " + result);
                     }
 
-                    result = evalStack.Pop();
-                    variablesFloat[lhs] = result;
+                    //This performs the assignment for the float variables
+                    else if (variablesFloat.ContainsKey(lhs))
+                    {
+                        // LHS is an float variable, so perform float addition
 
-                    //  Console.WriteLine("Result of expression: " + result);
+                        // Use stacks for operator precedence
+                        Stack<string> operators = new Stack<string>();
+                        Queue<string> outputQueue = new Queue<string>();
+
+                        int childIndex = 0;
+                        float result = 0;
+
+                        while (true)
+                        {
+                            var child = context.GetChild(childIndex);
+
+                            if (child == null)
+                            {
+                                break; // No more children, exit the loop
+                            }
+                            else
+                            {
+                                string token = child.GetText();
+                                if (variablesFloat.ContainsKey(token))
+                                {
+                                    string floatVariable = variablesFloat[token].ToString();
+                                    token = floatVariable;
+                                }
+                                if (float.TryParse(token, out float floatValue))
+                                {
+                                    // If it's a number, add it to the output queue
+                                    outputQueue.Enqueue(floatValue.ToString());
+                                }
+                                else if (token == "+" || token == "-" || token == "*" || token == "/")
+                                {
+                                    // If it's an operator
+                                    while (operators.Count > 0 && GetPrecedence(operators.Peek()) >= GetPrecedence(token))
+                                    {
+                                        // Pop operators with higher or equal precedence and enqueue them
+                                        outputQueue.Enqueue(operators.Pop());
+                                    }
+                                    operators.Push(token);
+                                }
+                            }
+
+                            childIndex++;
+                        }
+
+                        // Enqueue remaining operators to output
+                        while (operators.Count > 0)
+                        {
+                            outputQueue.Enqueue(operators.Pop());
+                        }
+
+                        // Evaluate the RPN expression
+                        Stack<float> evalStack = new Stack<float>();
+
+                        foreach (var item in outputQueue)
+                        {
+                            if (float.TryParse(item, out float floatValue))
+                            {
+                                evalStack.Push(floatValue);
+                            }
+                            else
+                            {
+                                float b = evalStack.Pop();
+                                float a = evalStack.Pop();
+
+                                switch (item)
+                                {
+                                    case "+":
+                                        evalStack.Push(a + b);
+                                        break;
+                                    case "-":
+                                        evalStack.Push(a - b);
+                                        break;
+                                    case "*":
+                                        evalStack.Push(a * b);
+                                        break;
+                                    case "/":
+                                        evalStack.Push(a / b);
+                                        break;
+                                }
+                            }
+                        }
+
+                        result = evalStack.Pop();
+                        variablesFloat[lhs] = result;
+
+                        //  Console.WriteLine("Result of expression: " + result);
+                    }
+
+                    else
+                    {
+                        Console.WriteLine($"Error: Variable '{lhs}' not found.");
+                    }
                 }
-
                 else
                 {
-                    Console.WriteLine($"Error: Variable '{lhs}' not found.");
+                    Console.WriteLine($"Error: Invalid assignment statement: {assignmentStatement}");
                 }
-            }
-            else
-            {
-                Console.WriteLine($"Error: Invalid assignment statement: {assignmentStatement}");
-            }
 
-            //  Console.WriteLine("ExitAssignment");
+                //  Console.WriteLine("ExitAssignment");
+            }
         }
-
         // Function to get operator precedence
         int GetPrecedence(string op)
         {
@@ -905,11 +954,42 @@ namespace _219003234_Parser
             else
             {
                 string[] subConditions = conditionExpression.Split(new string[] { "==", ">", "<", "<>", ">=", "<=" }, StringSplitOptions.RemoveEmptyEntries);
-
+                string arrayCheck = "";
                 if (int.TryParse(subConditions[0].Trim(), out int parsedValue))
                 {
                     // Parsing was successful, and parsedValue contains the integer value
                     lhs = parsedValue;
+                }
+                else if (subConditions[0].Contains("["))
+                {
+                    string input = subConditions[0];
+                    string variableName = "";
+                    int index = 0;
+                    int startIndex = input.IndexOf('[');
+                    int endIndex = input.IndexOf(']');
+
+                    if (startIndex != -1 && endIndex != -1 && startIndex < endIndex)
+                    {
+                        variableName = input.Substring(startIndex + 1, endIndex - startIndex - 1);
+                      //  Console.WriteLine("Variable Name: " + variableName); // Output:
+                    }
+
+                    if (variablesInteger.ContainsKey(variableName)) 
+                    {
+                        index = (int)variablesInteger[variableName];
+                        index = index - 1;
+                    }
+
+                   string newValue = subConditions[0].Replace(variableName, index.ToString());
+
+                    arrayCheck = (string)variablesArray[newValue];
+                    arrayCheck = arrayCheck.Replace("\"", ""); // Assign the result back to arrayCheck
+                    arrayCheck = arrayCheck.Trim('"'); // Assign the result back to arrayCheck
+                    if (int.TryParse(arrayCheck.Trim(), out int parsed))
+                    {
+                        lhs = parsed;
+                    }
+
                 }
                 else
                 {
@@ -917,16 +997,22 @@ namespace _219003234_Parser
                     lhs = myVarValue;
                 }
 
-                if (int.TryParse(subConditions[1].Trim(), out int parsedValue2))
+
+                string subCondition = subConditions[1].Trim();
+                subCondition = subCondition.Replace("\"", ""); // Remove double quotes
+                subCondition = subCondition.Trim(); // Remove leading/trailing whitespace
+
+                if (int.TryParse(subCondition, out int parsedValue2))
                 {
                     // Parsing was successful, and parsedValue contains the integer value
                     rhs = parsedValue2;
                 }
-                else
+                else if (variablesInteger.ContainsKey(subCondition))
                 {
-                    int myVarValue = (int)variablesInteger[subConditions[1].Trim()];
+                    int myVarValue = (int)variablesInteger[subCondition];
                     rhs = myVarValue;
                 }
+
 
                 bool value1ToCheck = false;
 
