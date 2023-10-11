@@ -1,13 +1,20 @@
-RECIPE HelloWorld
+RECIPE FunctionCall
 DO
 METHOD Main() AS INTEGER
 DO
-INGREDIENT name AS STRING;
-INGREDIENT name AS STRING;
-ASK(name);
-INGREDIENT message AS STRING;
-message = "Hello, " + name + "! and welcome to the first program";
-SPEAK(message);
+INGREDIENT num1 AS INTEGER;
+INGREDIENT num2 AS INTEGER;
+num1 = 5;
+num2 = 7;
+INGREDIENT result AS INTEGER;
+result = @AddNumbers(num1, num2);
+SPEAK("The sum is: " + result);
 SHARE 0;
+DONE
+METHOD AddNumbers(a AS INTEGER, b AS INTEGER) AS INTEGER
+DO
+INGREDIENT numba AS INTEGER;
+numba = a+b;
+SHARE numba;
 DONE
 DONE
