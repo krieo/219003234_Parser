@@ -114,7 +114,7 @@ namespace _219003234_Naidoo_KN_CC
 
                 if (!matched)
                 {
-                    // Skip unrecognized characters
+                  
                     currentPosition++;
                 }
             }
