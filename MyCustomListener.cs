@@ -41,18 +41,12 @@ namespace _219003234_Parser
             // Console.WriteLine("ExitStatement");
         }
 
-        //   public override void EnterAskStatement([NotNull] RecipeLanguageParser.AskStatementContext context)
-        //  {
-        //     Console.WriteLine("EnterAskStatement");
-        //  }
-
         /// <summary>
         /// This method performs the ask statement which is essentially console.readline
         /// </summary>
         /// <param name="context"></param>
         public override void EnterAskStatement([NotNull] RecipeLanguageParser.AskStatementContext context)
         {
-            // Console.WriteLine("EnterAskStatement");
             string variableName = context.ID().GetText(); // Get the variable name
 
             // Prompt the user for input
@@ -122,13 +116,10 @@ namespace _219003234_Parser
             //This is used to store integer variables in a list
             if (context.INTEGER() != null)
             {
-                // Console.WriteLine(context.INTEGER().GetText() + " THIS IS THE INTEGER ===========================================");
-                //  Console.WriteLine(context.ID().GetText() + " THIS IS THE id ===========================================");
                 //This checks if the variable is in the dictionary if its not it adds the entry if it is it shows an error
                 if (!variablesInteger.ContainsKey(context.ID().GetText()))
                 {
                     variablesInteger.Add(context.ID().GetText(), 0);
-                    // Console.WriteLine($"Variable '{context.ID().GetText()}' added with value: {0}");
                 }
                 else
                 {
@@ -140,13 +131,10 @@ namespace _219003234_Parser
             //This is used to store string variables in a list
             if (context.STRING() != null)
             {
-                // Console.WriteLine(context.STRING().GetText() + " THIS IS THE STRING ===========================================");
-                // Console.WriteLine(context.ID().GetText() + " THIS IS THE id ===========================================");
                 //This checks if the variable is in the dictionary if its not it adds the entry if it is it shows an error
                 if (!variablesString.ContainsKey(context.ID().GetText()))
                 {
                     variablesString.Add(context.ID().GetText(), "empty variable");
-                    // Console.WriteLine($"Variable '{context.ID().GetText()}' added with value: {"empty variable"}");
                 }
                 else
                 {
@@ -155,18 +143,13 @@ namespace _219003234_Parser
 
             }
 
-
-
             //This is used to store FLOAT variables in a list
             if (context.FLOAT() != null)
             {
-                //  Console.WriteLine(context.FLOAT().GetText() + " THIS IS THE FLOAT ===========================================");
-                //   Console.WriteLine(context.ID().GetText() + " THIS IS THE id ===========================================");
                 //This checks if the variable is in the dictionary if its not it adds the entry if it is it shows an error
                 if (!variablesFloat.ContainsKey(context.ID().GetText()))
                 {
                     variablesFloat.Add(context.ID().GetText(), 0.0);
-                    //      Console.WriteLine($"Variable '{context.ID().GetText()}' added with value: {0.0}");
                 }
                 else
                 {
@@ -178,13 +161,10 @@ namespace _219003234_Parser
             //This is used to store integer variables in a list
             if (context.BOOL() != null)
             {
-                // Console.WriteLine(context.INTEGER().GetText() + " THIS IS THE INTEGER ===========================================");
-                //  Console.WriteLine(context.ID().GetText() + " THIS IS THE id ===========================================");
                 //This checks if the variable is in the dictionary if its not it adds the entry if it is it shows an error
                 if (!variablesInteger.ContainsKey(context.ID().GetText()))
                 {
                     variablesInteger.Add(context.ID().GetText(), 0);
-                    // Console.WriteLine($"Variable '{context.ID().GetText()}' added with value: {0}");
                 }
                 else
                 {
@@ -203,18 +183,14 @@ namespace _219003234_Parser
 
         public override void EnterArrayDeclaration([NotNull] RecipeLanguageParser.ArrayDeclarationContext context)
         {
-            //  Console.WriteLine("EnterArrayDeclaration");
             //This is used to store integer variables in a list
             context.GetText();
             if (context.STRING() != null)
             {
-                // Console.WriteLine(context.INTEGER().GetText() + " THIS IS THE INTEGER ===========================================");
-                //  Console.WriteLine(context.ID().GetText() + " THIS IS THE id ===========================================");
                 //This checks if the variable is in the dictionary if its not it adds the entry if it is it shows an error
                 if (!variablesArray.ContainsKey(context.ID().GetText()))
                 {
                     variablesArray.Add(context.ID().GetText(), "");
-                    // Console.WriteLine($"Variable '{context.ID().GetText()}' added with value: {0}");
                 }
                 else
                 {
@@ -282,25 +258,12 @@ namespace _219003234_Parser
                 }
                 else
                 {
-      //              Console.WriteLine(context.Parent.GetText() + "THIS IS TEHE STRNG");
-
-        //            Console.WriteLine(context.GetText() + "THIS IS THEE STRNGSSS");
-        //      Console.WriteLine(context.Parent.Parent.Parent.GetText() + " herkmicdnsusebfwjefveywevfyewvfy");
                     if (context.Parent.Parent.Parent.GetText().Contains("IF") && context.Parent.Parent.Parent.GetText().Contains("THEN")) 
                     {
-                      
-                  //      Console.WriteLine("IT DOES CONTIAN THE IF THEN ------------------------------------------");
-                  //      foreach (var i in statements) 
-                //        {
-                 //           Console.WriteLine("THESE ARE WHAT IS IN THE STATEMENTS ARRAY:" + i);
-                        
-                    //    }
                         if (statements.Contains(context.GetText())) 
                         {
-                          // Console.WriteLine("YES WE FOUND IT ------------------------------------------");
                             valueToPrint = valueToPrint.Replace("SPEAK", "").Replace("(", "").Replace(")", "").Replace(";", "").Replace("\"", "");
 
-                            // Trim any remaining whitespace
                             valueToPrint = valueToPrint.Trim();
 
                             Console.WriteLine(valueToPrint);
@@ -311,11 +274,6 @@ namespace _219003234_Parser
                 }
 
             }
-            // Declare a variable and assign a value
-            // variables["myVar"] = 42;
-
-            // Access the variable
-            //int myVarValue = (int)variables["myVar"];
         }
 
         public override void ExitSpeakStatement([NotNull] RecipeLanguageParser.SpeakStatementContext context)
@@ -395,12 +353,9 @@ namespace _219003234_Parser
 
                 }
 
-                }
-                else //not an array
+            }
+            else //not an array
             {
-
-
-
 
                 //  Console.WriteLine("EnterAssignment");
                 string assignmentStatement = context.GetText(); // Get the entire assignment statement
@@ -485,7 +440,7 @@ namespace _219003234_Parser
                                 }
                                 else if (token.Equals("@"))
                                 {
-                                    Console.WriteLine(context.FUNCTION_CALL() + " this is reg fynctioncall");
+                                    Console.WriteLine(context.FUNCTION_CALL());
                                 }
                             }
 
@@ -733,27 +688,23 @@ namespace _219003234_Parser
             {
                 if (op == ">" && value > endValue)
                 {
-                    // Your loop body here (e.g., i = i - 1;)
                     value = value - 1;
                 }
                 else if (op == "<" && value < endValue)
                 {
-                    // Your loop body here (e.g., i = i + 1;)
                     value = value + 1;
                 }
                 else if (op == "==" && value == endValue)
                 {
-                    // Your loop body here (e.g., i = i + 1;)
                     value = value + 1;
                 }
                 else if (op == "<>" && value != endValue)
                 {
-                    // Your loop body here (e.g., i = i + 1;)
                     value = value + 1;
                 }
                 else
                 {
-                    break; // Exit the loop when the condition is no longer met
+                    break; // This exits the loop when the condition is no longer met
                 }
 
                 // Update the variable value if necessary

@@ -23,7 +23,7 @@ namespace _219003234_Naidoo_KN_CC
 ("FLOAT", new Regex(@"\bFLOAT\b")),
 ("SPEAK", new Regex(@"\bSPEAK\b")),
 ("SHARE", new Regex(@"\bSHARE\b")),
-("WHILE", new Regex(@"\bWHILE\b")), //CHECKS IF THESE ARE COREECT****************************************************************************************************************************************BUSY HERE CHECKING IF THESE ARE CORRECT BECAUSE BEFORE I MISSED STRING AM ALSO BUSY WITH PARSER
+("WHILE", new Regex(@"\bWHILE\b")),
 ("DONE", new Regex(@"\bDONE\b")),
 ("LOOP", new Regex(@"\bLOOP\b")),
 ("ELSE", new Regex(@"\bELSE\b")),
@@ -37,10 +37,10 @@ namespace _219003234_Naidoo_KN_CC
 ("STAR", new Regex(@"\*")),
 ("EQUAL", new Regex(@"==")),
 ("THEN", new Regex(@"\bTHEN\b")),
-//("FUNCTION_CALL", new Regex(@"@([a-zA-Z]|[0-9])([a-zA-Z]|[0-9])*\(.*\);")),
+
 ("FUNCTION_CALL", new Regex(@"@")),
 ("ASSIGN", new Regex(@"=")),
-//("EQUAL", new Regex(@"==")),
+
 ("NEQ", new Regex(@"<>")),
 ("GREATEREQUAL", new Regex(@">=")),
 ("LESSEREQUAL", new Regex(@"<=")),
@@ -51,7 +51,7 @@ namespace _219003234_Naidoo_KN_CC
 ("RIGHTPARENTHESIS", new Regex(@"\)")),
 ("LEFTBRACKET", new Regex(@"\[")),
 ("RIGHTBRACKET", new Regex(@"\]")),
-//("STRINGLIT", new Regex(@"""(?:[a-zA-Z0-9~!@#$%^&*`()\[\]_\-+=|{};:<>,.?\\])*")),
+
 ("STRINGLIT", new Regex(@"""(?:[^""\\]|\\.)*""")),
  ("BOOL", new Regex(@"\bBOOL\b")),
     ("AND", new Regex(@"\bAND\b")),
