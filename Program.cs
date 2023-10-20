@@ -88,7 +88,7 @@ namespace _219003234_Parser
 
             string input = ReadTextFromFile(filePath);
 
-            // Print the contents from the file to the screen
+            // This prints the contents from the file to the screen
             Console.WriteLine(input);
             Console.WriteLine("\n");
 
@@ -100,7 +100,7 @@ namespace _219003234_Parser
 
             string scannerTokens = new string("");
           
-            // Print out the type and lexeme pairs from the tokenized input
+            // This prints out the type and lexeme pairs from the tokenized input
             foreach (Token token in tokens)
             {
                 //Console.WriteLine($"Type: {token.Type}, Lexeme: {token.Lexeme}");
@@ -122,11 +122,11 @@ namespace _219003234_Parser
             ICharStream stream = new AntlrInputStream(scannerTokens);
             Console.WriteLine("ANTLR Character Stream:\n" + stream.ToString() + "\n");
 
-            // Create the lexer
+            // this creates the lexer
             RecipeLanguageLexer lexer = new RecipeLanguageLexer(stream);
             Console.WriteLine("Lexer Output:\n");
 
-            // Tokenize the input
+            // this tokenizes the input
             CommonTokenStream tokens2 = new CommonTokenStream(lexer);
             tokens2.Fill();
             foreach (var token in tokens2.GetTokens())
@@ -143,7 +143,7 @@ namespace _219003234_Parser
                 
             }
 
-            // Create the parser
+            // This creates the parser
             RecipeLanguageParser parser = new RecipeLanguageParser(myToken);
 
             // Parse the input
@@ -153,22 +153,14 @@ namespace _219003234_Parser
 
             Console.WriteLine("\nThis is the start of the program\n");
 
-            // Create your custom listener
-            //  var myListener = new MyCustomListener();
-
-            // Walk the parse tree using your custom listener
-            // ParseTreeWalker.Default.Walk(myListener, tree);
-
-            //parser end
-
             //tree walker start
             // Create an instance of your custom listener
             var customListener = new MyCustomListener();
 
-            // Create a walker
+            // This creates a tree walker
             var walker = new ParseTreeWalker();
 
-            // Walk the parse tree with your custom listener
+            // This walks the tree for code emmision
             walker.Walk(customListener, tree);
 
             //tree walker end

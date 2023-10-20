@@ -10,7 +10,8 @@ namespace _219003234_Parser
     {
 
         private string askInput = "";
-        // Declare the dictionary
+
+        // This declares the dictionary where variables are stored
         Dictionary<string, object> variablesString = new Dictionary<string, object>();
         Dictionary<string, object> variablesInteger = new Dictionary<string, object>();
         Dictionary<string, object> variablesFloat = new Dictionary<string, object>();
